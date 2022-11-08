@@ -7,13 +7,19 @@ import s from './Welcome.module.scss'
 let x: number | undefined = undefined;
 export const Welcome = defineComponent({
   setup: (props, context) => {
-    const main = ref<HTMLElement | null>(null)
+
+    // 首次进入先把main定义传进去走一遍useSwipe，然后return之后，main才绑到 main标签上
+    //然后 main 把main标签这个HTMLElement 传给useSwipe，才开始监听它并运行useSwipe
+    //所以ref就是一个传标签实例的东西
+    const main = ref<HTMLElement>()
     const { direction, swiping } = useSwipe(main)
     watchEffect(() => {
-      console.log(swiping.value, direction.value)
+        console.log(swiping.value, direction.value)
     })
-    return () => <div class={s.wrapper}>
-      <header>
+
+
+    return () => (<div class={s.wrapper}>
+      <header >
         <svg>
           <use xlinkHref='#jitui'></use>
         </svg>
@@ -59,6 +65,10 @@ export const Welcome = defineComponent({
       <footer>
         <RouterView name="footer" />
       </footer>
-    </div>
+    </div>)
   }
 })
+
+
+
+
