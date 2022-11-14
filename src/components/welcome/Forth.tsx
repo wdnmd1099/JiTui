@@ -7,5 +7,4 @@ export const Forth = () => (
     <h2>每日提醒<br />不遗漏每一笔账单</h2>
   </div>
 )
-
 Forth.displayName = 'Forth'

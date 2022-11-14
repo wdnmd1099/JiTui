@@ -1,6 +1,7 @@
 import { defineComponent, ref, Transition, VNode, watchEffect } from 'vue';
-import { RouteLocationNormalizedLoaded, RouterView } from 'vue-router';
+import { RouteLocationNormalizedLoaded, routerKey, RouterView, useRoute, useRouter } from 'vue-router';
 import { useSwipe } from '../hooks/useSwipe';
+import { throttle } from '../shared/throttle';
 import s from './Welcome.module.scss'
 
 
@@ -12,9 +13,24 @@ export const Welcome = defineComponent({
     //然后 main 把main标签这个HTMLElement 传给useSwipe，才开始监听它并运行useSwipe
     //所以ref就是一个传标签实例的东西
     const main = ref<HTMLElement>()
-    const { direction, swiping } = useSwipe(main)
+    const route = useRoute()  //useRoute 是路由信息 userRouter 是路由器
+    const router = useRouter()
+    const { direction, swiping } = useSwipe(main, { beforeStart: e => e.preventDefault() })
+    const push = throttle(() => {
+      if (route.name === 'welcome1') {
+        router.push('/welcome/2')
+      } else if (route.name === 'welcome2') {
+        router.push('/welcome/3')
+      } else if (route.name === 'welcome3') {
+        router.push('/welcome/4')
+      } else if (route.name === 'welcome4') {
+        router.push('/start')
+      }
+    }, 1000)
     watchEffect(() => {
-        console.log(swiping.value, direction.value)
+      if (swiping.value && direction.value === "left") {
+        push()
+      }
     })
 
 
@@ -28,26 +44,26 @@ export const Welcome = defineComponent({
       <main class={s.main} ref={main}>
         <RouterView name="main">
           {({ Component: C, route: R }: { Component: VNode, route: RouteLocationNormalizedLoaded }) => {
-            if(x===undefined){
+            if (x === undefined) {
               x = parseInt(R.fullPath[9])
               return <Transition
-              enterFromClass={s.slide_fade_enter_from}
-              enterActiveClass={s.slide_fade_enter_active}
-              leaveToClass={s.slide_fade_leave_to}
-              leaveActiveClass={s.slide_fade_leave_active}>
-              {C}
-            </Transition>
-            }else if (parseInt(R.fullPath[9])>x) {  
+                enterFromClass={s.slide_fade_enter_from}
+                enterActiveClass={s.slide_fade_enter_active}
+                leaveToClass={s.slide_fade_leave_to}
+                leaveActiveClass={s.slide_fade_leave_active}>
+                {C}
+              </Transition>
+            } else if (parseInt(R.fullPath[9]) > x) {
               x = parseInt(R.fullPath[9])
               return <Transition
-              enterFromClass={s.slide_fade_enter_from}
-              enterActiveClass={s.slide_fade_enter_active}
-              leaveToClass={s.slide_fade_leave_to}
-              leaveActiveClass={s.slide_fade_leave_active}>
-              {C}
-            </Transition>
+                enterFromClass={s.slide_fade_enter_from}
+                enterActiveClass={s.slide_fade_enter_active}
+                leaveToClass={s.slide_fade_leave_to}
+                leaveActiveClass={s.slide_fade_leave_active}>
+                {C}
+              </Transition>
             }
-            else if(parseInt( R.fullPath[9])<x){
+            else if (parseInt(R.fullPath[9]) < x) {
               x = parseInt(R.fullPath[9])
               return <Transition
                 enterFromClass={s.slide_fade2_enter_from}
