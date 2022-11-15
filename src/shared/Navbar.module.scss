@@ -1,0 +1,25 @@
+.navbar{
+    background-image: linear-gradient(to bottom, var(--navbar-bg-start) 0%, var(--navbar-bg-end) 100%);
+    color:var(--navbar-text-color);
+    fill:var(--navbar-text-color);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px 16px 16px;
+}
+.title_wrapper{
+    font-size: 20px;
+    margin-left: 12px;
+}
+.icon_wrapper{
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > * {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+

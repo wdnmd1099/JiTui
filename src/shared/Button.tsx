@@ -9,7 +9,7 @@ export const Button = defineComponent<Props>({
     setup(props, context) {
         const test = ()=>{console.log(context.slots.default?.())}
         return () => (
-            <button class={s.button}>
+            <button class={s.button} >
                 {context.slots?.default?.()}
             </button>
         )

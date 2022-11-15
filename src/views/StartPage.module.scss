@@ -4,3 +4,22 @@
         padding: 16px 16px;
     }
 }
+
+.pig{
+    width: 128px;
+    height: 128px;
+    &_wrapper{
+        padding: 120px 0;
+    }
+}
+
+.navIcon{
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top:2px;
+}
+
+.add{
+    fill:red
+}
