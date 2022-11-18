@@ -14,6 +14,7 @@ export const Tabs = defineComponent({
     setup(props, context) {
         return () => {
             const array = context.slots?.default?.()
+            // console.log(array)
             //array 是数组，数组里面是 Tab 组件的内容
             if (!array) return () => null
             for (let i = 0; i < array?.length; i++) {
@@ -34,7 +35,8 @@ export const Tabs = defineComponent({
                         </li>)}
                 </ol>
                 <div>
-                    
+                    {array.find(item => item.props?.name === props.selected)}
+                    {/* 找到当前选中的Tab组件，把它的context.slots?.default渲染到页面 */}
                 </div>
             </div>
         }
@@ -51,7 +53,7 @@ export const Tab = defineComponent({
     },
     setup(props, context) {
         return () => (
-            <div class={s.wrapper}></div>
+            <div>{context.slots.default?.()}</div>
         )
     }
 })
