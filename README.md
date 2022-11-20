@@ -19,6 +19,10 @@ yarn add vue-router@4.0.14
 yarn add sass@1.49.11
 
 yarn add svgstore@3.0.1
+
+yarn add -D vite-plugin-style-import@1.4.1
+
+yarn add vant@3.4.8
 ```
 
 ## 搭建完成运行 npx pnpm run dev

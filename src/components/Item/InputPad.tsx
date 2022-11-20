@@ -2,6 +2,7 @@ import { defineComponent, PropType, ref } from "vue";
 import { Icon } from "../../shared/Icon";
 import { time } from "../../shared/time";
 import s from './InputPad.module.scss';
+import { DatetimePicker, Popup } from 'vant';
 export const InputPad = defineComponent({
   props:{
     name:{
@@ -30,14 +31,27 @@ export const InputPad = defineComponent({
       }
     },
     ]
+
+    const now = new Date()
+    const refDate = ref<Date>(now)
+    const refDatePickerVisible = ref(false)
+    const showDatePicker = () => refDatePickerVisible.value = true
+    const hideDatePicker = () => refDatePickerVisible.value = false
+    const setDate = (date: Date) => { refDate.value = date; hideDatePicker() }
     return ()=>(
       <>
         <div class={s.dateAndAmount}>
           <span class={s.date}>
              <Icon name='date' class={s.icon}/>
-             <span ><input type="date" value={time().format()}  id='xxxx'/></span>
+             
+             <span onClick={showDatePicker}>{time().format()}</span>
+             <Popup position='bottom' v-model:show={refDatePickerVisible.value}>
+              <DatetimePicker value={refDate.value} type="date" title="选择年月日"
+                onConfirm={setDate} onCancel={hideDatePicker}
+              />
+            </Popup>
           </span>
-          <span class={s.amount}><input type="text" /></span>
+          <span class={s.amount}>299.3</span>
         </div>
 
         <div class={s.buttons}>
