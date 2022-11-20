@@ -1,5 +1,6 @@
 import { defineComponent, PropType, ref } from "vue";
 import { Icon } from "../../shared/Icon";
+import { time } from "../../shared/time";
 import s from './InputPad.module.scss';
 export const InputPad = defineComponent({
   props:{
@@ -24,22 +25,26 @@ export const InputPad = defineComponent({
       {text:'.',onclick:()=>{}},
       {text:'0',onclick:()=>{}},
       {text:'删',onclick:()=>{}},
-      {text:'提交',onclick:()=>{}},
+      {text:'提交',onclick:()=>{
+        console.log((document.getElementById('xxxx') as HTMLInputElement).value) 
+      }
+    },
     ]
     return ()=>(
       <>
         <div class={s.dateAndAmount}>
           <span class={s.date}>
              <Icon name='date' class={s.icon}/>
-             <span>2022-01-01</span>
+             <span ><input type="date" value={time().format()}  id='xxxx'/></span>
           </span>
-          <span class={s.amount}>13123.234254</span>
+          <span class={s.amount}><input type="text" /></span>
         </div>
 
         <div class={s.buttons}>
           {buttons.map(button => 
           <button onClick={button.onclick}>{button.text}</button>)}
         </div>
+
       </>
     )
   }
