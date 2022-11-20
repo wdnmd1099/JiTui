@@ -1,0 +1,42 @@
+.dateAndAmount{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    font-family: monospace;
+    border-top: 1px solid var(--input-pad-buttons-border-color);
+    >.date{
+        font-size: 12px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        
+        .icon{
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+    }
+    >.amount{
+        font-size: 20px;
+        color: var(--amount-text-color);
+    }
+}
+
+.buttons{
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--input-pad-buttons-border-color);
+    border-left: 1px solid var(--input-pad-buttons-border-color);
+    >button{
+        border: none;
+        border-right: 1px solid var(--input-pad-buttons-border-color);
+        border-bottom: 1px solid var(--input-pad-buttons-border-color);
+        width: 25%;
+        height: 64px;
+        background: transparent;
+        &:nth-child(4n){ //每第四个元素，不写n就是第四个元素的意思
+            border-right: none;
+        }
+    }
+}
