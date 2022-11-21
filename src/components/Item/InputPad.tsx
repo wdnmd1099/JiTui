@@ -10,21 +10,40 @@ export const InputPad = defineComponent({
     }
   },
   setup(props,context){
+    const refAmount = ref('0')
+    const appendText = (_n:number|string)=>{
+        const n=_n.toString()
+        const dotIndex =refAmount.value.indexOf('.')
+        let add = ()=>{refAmount.value += n}
+        if(n ==='.' && dotIndex === -1){ //一开始打. 就是0.
+          add()
+          return
+        }else if(refAmount.value[0]==='0' && dotIndex === -1){ //一开始打数字，就是数字
+          refAmount.value = ''
+          add()
+          return
+        }else if(n ==='.' && dotIndex >= 0){ //打了点不能再打点
+          return
+        }else if(refAmount.value.length - dotIndex > 2){ //小数点后二位结束
+          return
+        }else if(refAmount.value.length > 11 ){
+          return
+        }
+        add()
+    }
     const buttons = [
-      {text:'1',onclick:()=>{
-        refAmount.value += '1'
-      }},
-      {text:'2',onclick:()=>{}},
-      {text:'3',onclick:()=>{}},
-      {text:'4',onclick:()=>{}},
-      {text:'5',onclick:()=>{}},
-      {text:'6',onclick:()=>{}},
-      {text:'7',onclick:()=>{}},
-      {text:'8',onclick:()=>{}},
-      {text:'9',onclick:()=>{}},
-      {text:'.',onclick:()=>{}},
-      {text:'0',onclick:()=>{}},
-      {text:'清空',onclick:()=>{}},
+      {text:'1',onclick:()=>{appendText(1)}},
+      {text:'2',onclick:()=>{appendText(2)}},
+      {text:'3',onclick:()=>{appendText(3)}},
+      {text:'4',onclick:()=>{appendText(4)}},
+      {text:'5',onclick:()=>{appendText(5)}},
+      {text:'6',onclick:()=>{appendText(6)}},
+      {text:'7',onclick:()=>{appendText(7)}},
+      {text:'8',onclick:()=>{appendText(8)}},
+      {text:'9',onclick:()=>{appendText(9)}},
+      {text:'.',onclick:()=>{appendText('.')}},
+      {text:'0',onclick:()=>{appendText(0)}},
+      {text:'清空',onclick:()=>{refAmount.value = '0'}},
       {text:'提交',onclick:()=>{
         console.log((document.querySelector('.xxxx') as HTMLInputElement).innerText) 
       }
@@ -35,7 +54,6 @@ export const InputPad = defineComponent({
     const showDatePicker = () => refDatePickerVisible.value = true
     const hideDatePicker = () => refDatePickerVisible.value = false
     const setDate = (date: Date) => {refDate.value = date; hideDatePicker() }
-    const refAmount = ref()
     return ()=>(
       <>
         <div class={s.dateAndAmount}>
@@ -65,3 +83,7 @@ export const InputPad = defineComponent({
     )
   }
 })
+
+function appendText(arg0: number) {
+  throw new Error("Function not implemented.");
+}
