@@ -20,9 +20,14 @@ yarn add sass@1.49.11
 
 yarn add svgstore@3.0.1
 
+yarn add vant@3.4.8  
 yarn add -D vite-plugin-style-import@1.4.1
 
-yarn add vant@3.4.8
+这里测试过新版的vant和vite-plugin-style-import不能一起用
+而且尝试过vant网站推荐的插件unplugin-vue-components 也是不能用的
+
+
+
 ```
 
 ## 搭建完成运行 npx pnpm run dev
