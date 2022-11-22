@@ -12,6 +12,11 @@ import { StartPage } from '../views/StartPage'
 import { ItemPage } from "../views/ItemPage";
 import { ItemList } from "../components/Item/ItemList";
 import { ItemCreate } from "../components/Item/ItemCreate";
+import { TagPage } from "../views/TagPage";
+import { TagCreate } from "../components/Tags/TagCreate";
+import { TagEdit } from "../components/Tags/TagEdit";
+
+//如果没反应的话先看看父路由有没有写<RouterView/>
 
 export const routes: RouteRecordRaw[] = [
   { path: '/', redirect: '/welcome' },
@@ -33,4 +38,12 @@ export const routes: RouteRecordRaw[] = [
       {path:'create',component:ItemCreate},
     ]
   },
+
+  { path: '/tags', component: TagPage,
+    children:[
+      {path:'',component:TagCreate},
+      {path:'create',component:TagEdit},
+  ]
+},
+  {path:'/create',component:TagCreate},
 ]
