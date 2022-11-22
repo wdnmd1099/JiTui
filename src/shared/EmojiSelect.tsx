@@ -3,7 +3,7 @@ import { emojiList } from './emojiList';
 import s from './EmojiSelect.module.scss';
 export const EmojiSelect = defineComponent({
   props: {
-    modelValue: {
+    modelValue: {  //formData.sign传过来的modelValue
       type: String
     }
   },
@@ -33,20 +33,20 @@ export const EmojiSelect = defineComponent({
       refSelected.value = index
     }
     const onClickEmoji = (emoji: string) => {
-      context.emit('update:modelValue', emoji)
+       context.emit('update:modelValue', emoji) //传给TagCreate的formData.sign
     }
     const emojis = computed(() => {
-      const selectedItem = table[refSelected.value][1]
-      return selectedItem.map(category =>
-        emojiList.find(item => item[0] === category)?.[1]
-          .map(item => <li class={item === props.modelValue ? s.selectedEmoji : ''}
-            onClick={() => onClickEmoji(item)}>{item}</li>)
+      const selectedItem = table[refSelected.value][1] //refSelected.value是上面的中文，比如选中了 table[7] 食物，那么selectedItem就是食物的那个英文数组'food-fruit'....
+      return selectedItem.map(category =>//遍历selectedItem
+        emojiList.find(item => item[0] === category)?.[1]//对里面每个英文都去emojiList数据库里找到相对应的类型的emoji表情
+          .map(emoji => <li class={emoji === props.modelValue ? s.selectedEmoji : ''}//找到这些实际的emoji表情之后，就把它们用li包住渲染到页面，同时对每个表情加一个click事件，点击后把emoji传出去
+            onClick={()=>onClickEmoji(emoji)}>{emoji}</li>) //传参的onclick必须要用函数包住，否则将会相当于onclick返回值
       )
     })
     return () => (
       <div class={s.emojiList}>
         <nav>
-          {table.map((item, index) =>
+          {table.map((item, index) => //index 是map 传回来的
             <span class={index === refSelected.value ? s.selected : ''}
               onClick={() => onClickTab(index)}>{item[0]}</span>)}
         </nav>
