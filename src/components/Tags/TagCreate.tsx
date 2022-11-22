@@ -11,10 +11,10 @@ export const TagCreate = defineComponent({
     }
   },
   setup: (props, context) => {
-    const formData = {
+    const formData = reactive({
       name: '',
       sign: 'x',
-    }
+    })
     return () => (
       <MainLayout>{{
         title: () => '新建标签',
