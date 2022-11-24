@@ -9,6 +9,9 @@
     margin-top: 8px;
   }
   .formLabel {
+    >.formItem_errorHint{
+      height: 12px;
+    }
   }
   .formItem {
     min-height: var(--input-min-height);
@@ -27,6 +30,12 @@
       box-shadow: inset 0 0 3px var(--input-shadow);
       &.error {
         border-color: var(--error-color);
+      }
+      &.apple{
+        border-color: blue;
+      }
+      &.xxx{
+        
       }
     }
     

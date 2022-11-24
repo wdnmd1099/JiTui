@@ -14,13 +14,13 @@ export const TagCreate = defineComponent({
   setup: (props, context) => {
     const formData = reactive({
       name: '',
-      sign: 'x',
+      sign: ' ',
     })
     const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
     const onSubmit = (e: Event) => {
       const rules: Rules<typeof formData> = [
         { key: 'name', type: 'required', message: '必填' },
-        { key: 'name', type: 'pattern', regex: /^.{1,4}$/, message: '只能填 1 到 4 个字符' },
+        { key: 'name', type: 'pattern', regex: /^.{1,8}$/, message: '只能填 1 到 8 个字符' },
         { key: 'sign', type: 'required', message: '必填' },
       ]
       Object.assign(errors, {
@@ -40,7 +40,7 @@ export const TagCreate = defineComponent({
               <label class={s.formLabel}>
                 <span class={s.formItem_name}>标签名</span>
                 <div class={s.formItem_value}>
-                  <input v-model={formData.name} class={[s.formItem, s.input, s.error]}></input>
+                  <input v-model={formData.name} class={[s.formItem, s.input,s.error]}></input>
                 </div>
                 <div class={s.formItem_errorHint}>
                   <span>{errors['name']?errors['name'][0] : ' '}</span>
@@ -58,7 +58,7 @@ export const TagCreate = defineComponent({
                 </div>
                 
                 <div class={s.formItem_errorHint}>
-                  <span>必填</span>
+                  <span>{errors['sign']?errors['sign'][0] : ' '}</span>
                 </div>
               </label>
             </div>
