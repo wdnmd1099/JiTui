@@ -1,14 +1,13 @@
-import { defineComponent, PropType, ref } from "vue";
-// import s from './TagEdit.module.scss';
+import { defineComponent, PropType, reactive, ref } from "vue";
 export const TagEdit = defineComponent({
-  props:{
-    name:{
-        type:String as PropType<string>
-    }
-  },
   setup(props,context){
+    const x1 = reactive({
+      c:123
+    })
     return ()=>(
-      <div>tagEdit</div>
+      <>
+      <div>xxx</div>
+      </>
     )
   }
 })

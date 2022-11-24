@@ -24,11 +24,14 @@ export const InputPad = defineComponent({
           return
         }else if(n ==='.' && dotIndex >= 0){ //打了点不能再打点
           return
-        }else if(refAmount.value.length - dotIndex > 2){ //小数点后二位结束
-          return
-        }else if(refAmount.value.length > 11 ){
+        }
+        else if(refAmount.value.length > 11 ){
           return
         }
+        else if(refAmount.value.length - dotIndex > 2 && dotIndex !== -1){ //小数点后二位结束
+          return
+        }
+        
         add()
     }
     const buttons = [
