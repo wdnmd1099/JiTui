@@ -40,6 +40,8 @@
     >button{
         border: none;
         background: white;
+        margin: 2px;
+        border-radius: 8px;
         &:nth-child(1) {
           grid-area: n1;
         }

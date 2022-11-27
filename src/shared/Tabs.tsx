@@ -6,10 +6,10 @@ export const Tabs = defineComponent({
             type: String as PropType<string>,
             required:false
         },
-        onUpdateSelected:{
-            type: Function as PropType<(name: string) => void>,
-            required:false
-        }
+        // onUpdateSelected:{
+        //     type: Function as PropType<(name: string) => void>,
+        //     required:false
+        // }
     },
     setup(props, context) {
         return () => {
@@ -36,7 +36,8 @@ export const Tabs = defineComponent({
                 </ol>
                 <div>
                     {array.find(item => item.props?.name === props.selected)}
-                    {/* 找到当前选中的Tab组件，把它的context.slots?.default渲染到页面 */}
+                    {/* 找到当前选中的Tab组件，把它的context.slots?.default渲染到页面,不理解的话打开下面的关闭上面的就知道了 */}
+                    {/* {<Tab name="支出"><div>xxxxxx</div></Tab>} */}
                 </div>
             </div>
         }
