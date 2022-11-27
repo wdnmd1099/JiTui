@@ -31,12 +31,6 @@
       &.error {
         border-color: var(--error-color);
       }
-      &.apple{
-        border-color: blue;
-      }
-      &.xxx{
-        
-      }
     }
     
     &_name {
@@ -52,3 +46,16 @@
       font-size: 12px;
     }
   }
+
+
+  .actions{
+    padding: 0 16px 16px ;
+    display: flex;
+    justify-content: space-between;
+    .removeTagsAndItems,.removeTags{
+        width: calc(50% - 8px);
+        font-size: 15px;
+      }
+  }
+ 
+
