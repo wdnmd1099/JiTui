@@ -3,6 +3,7 @@ import { MainLayout } from "../../layouts/MainLayout";
 import { Icon } from "../../shared/Icon";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { Time } from "../../shared/time";
+import { TimeSelect } from "../../shared/TimeSelect";
 import s from './ItemList.module.scss';
 import { ItemSummary } from "./ItemSummary";
 export const ItemList = defineComponent({
@@ -35,6 +36,7 @@ export const ItemList = defineComponent({
       {id:'旅行',time:'2022-11-23',money:'3'},
       {id:'旅行',time:'2022-11-23',money:'2632'},
     ])
+    const refData1 = ref([])
     return ()=>(<>
      <MainLayout>{
       {
@@ -54,14 +56,15 @@ export const ItemList = defineComponent({
               </ItemSummary>
               </Tab>
               <Tab name='今年'>
-              <ItemSummary startDate={time[2].startDay} endDate={time[2].endDay} refData={refData.value}>
+              <ItemSummary startDate={time[2].startDay} endDate={time[2].endDay} refData={refData1.value}>
 
               </ItemSummary>
               </Tab>
               <Tab name='自定义时间'>
-              <ItemSummary>
-
-              </ItemSummary>
+              <TimeSelect>
+                
+              </TimeSelect>
+                  
               </Tab>
             </Tabs>
           </>

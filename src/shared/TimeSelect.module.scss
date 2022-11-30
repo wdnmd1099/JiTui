@@ -1,0 +1,79 @@
+.IS{
+    border: 1px solid red;
+    display: none;
+    
+    
+}
+.tool{
+    position: absolute;
+    height: 6vh;
+    width: 34vw;
+    right: 0;
+    top: 0;
+    z-index: 8;
+}
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15vh;
+    
+    &.hiddenWindow{
+        display: none;
+    }
+    .upProps{
+        z-index: 2;
+        height: 42vh;
+        width: 36vh;
+        background: white;
+    }
+    .title{
+        height: 5vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: gray;
+        color: white;
+    }
+    .start{
+        margin: 30px 20px 30px 20px;
+        display: flex;
+        flex-direction: column;
+    }
+    .startInput,.endInput{
+        height: 46px;
+        border-radius: 8px;
+    }
+    .end{
+        margin: 0px 20px 30px 20px;
+        display: flex;
+        flex-direction: column;
+    }
+    .shadow{
+        position: absolute;
+        height:calc(100vh);
+        top:-92px;
+        width: 100vw;
+        background: rgba(rgb(80, 80, 80),0.5);
+        z-index: 1;
+        
+    }
+    .yesOrNo{
+        // border: 1px solid red;
+        height: 8vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 24px 20px 20px 20px;
+        font-size: 1.2em;
+        .yes{
+            position: absolute;
+            right: 17vw;
+        }
+        .no{
+            position: absolute;
+            right: 39vw;
+        }
+    }
+}
+
