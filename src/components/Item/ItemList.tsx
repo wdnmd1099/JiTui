@@ -1,6 +1,7 @@
 import { defineComponent, PropType, reactive, ref } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Icon } from "../../shared/Icon";
+import { Overlay } from "../../shared/Overlay";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { Time } from "../../shared/time";
 import { TimeSelect } from "../../shared/TimeSelect";
@@ -37,11 +38,15 @@ export const ItemList = defineComponent({
       {id:'旅行',time:'2022-11-23',money:'2632'},
     ])
     const refData1 = ref([])
+    const overlayVisible = ref(false)
+    const onClickMenu = ()=>{
+      overlayVisible.value = !overlayVisible.value;
+    }
     return ()=>(<>
      <MainLayout>{
       {
         title: ()=>'鸡腿记账',
-        icon:()=> <Icon name='menu' />,
+        icon:()=> <Icon name='menu' onClick={onClickMenu}/>,
         default:()=>(
           <>
             <Tabs v-model:selected={refSelected.value} class={s.tabs}>
@@ -67,6 +72,8 @@ export const ItemList = defineComponent({
                   
               </Tab>
             </Tabs>
+             {overlayVisible.value &&
+                <Overlay onClose={() => overlayVisible.value = false} />}
           </>
         )
       }

@@ -6,11 +6,8 @@ export const Tabs = defineComponent({
             type: String as PropType<string>,
             required:false
         },
-        // onUpdateSelected:{
-        //     type: Function as PropType<(name: string) => void>,
-        //     required:false
-        // }
     },
+    emits:['update:selected'],
     setup(props, context) {
         return () => {
             const array = context.slots?.default?.()
@@ -27,8 +24,7 @@ export const Tabs = defineComponent({
                     {array.map(item =>
                         <li class={item.props?.name === props.selected ? s.selected : ''}
                         onClick={()=> context.emit('update:selected',item.props?.name)}
-                            //onClick={()=>props.onUpdateSelected?.(item.props?.name)}
-                        // 被点击的li的name传给selected，类似双向绑定，所以name 和 selected 永远相等
+                        // 被点击的li的name传给selected，双向绑定，所以name 和 selected 永远相等
                         // 然后给被点击的li 加上样式
                         >
                          {item.props?.name}
