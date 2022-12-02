@@ -3,8 +3,8 @@ import { MainLayout } from "../../layouts/MainLayout";
 import { Icon } from "../../shared/Icon";
 import { Overlay } from "../../shared/Overlay";
 import { Tab, Tabs } from "../../shared/Tabs";
+import { Test } from "../../shared/Test";
 import { Time } from "../../shared/time";
-import { TimeSelect } from "../../shared/TimeSelect";
 import s from './ItemList.module.scss';
 import { ItemSummary } from "./ItemSummary";
 export const ItemList = defineComponent({
@@ -37,7 +37,10 @@ export const ItemList = defineComponent({
       {id:'旅行',time:'2022-11-23',money:'3'},
       {id:'旅行',time:'2022-11-23',money:'2632'},
     ])
-    const refData1 = ref([])
+    const refData1 = ref([
+      {id:'吃饭',time:'2022-11-23',money:'325'},
+      {id:'睡觉',time:'2022-11-23',money:'722'},
+      {id:'打游戏',time:'2022-11-23',money:'1'},])
     const overlayVisible = ref(false)
     const onClickMenu = ()=>{
       overlayVisible.value = !overlayVisible.value;
@@ -56,7 +59,7 @@ export const ItemList = defineComponent({
                 </ItemSummary>
               </Tab>
               <Tab name='上月'>
-              <ItemSummary startDate={time[1].startDay} endDate={time[1].endDay} refData={refData.value}>
+              <ItemSummary startDate={time[1].startDay} endDate={time[1].endDay} refData={refData1.value}>
 
               </ItemSummary>
               </Tab>
@@ -66,9 +69,10 @@ export const ItemList = defineComponent({
               </ItemSummary>
               </Tab>
               <Tab name='自定义时间'>
-              <TimeSelect>
-                
-              </TimeSelect>
+              <ItemSummary startDate={time[2].startDay} endDate={time[2].endDay} refData={refData.value} />
+                <Test/>
+              
+
                   
               </Tab>
             </Tabs>

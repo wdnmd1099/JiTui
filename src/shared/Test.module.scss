@@ -1,0 +1,102 @@
+.sss{
+    position: absolute;
+    // border: 2px solid red;
+    height: 100vh;
+    width: 100vw;
+    top:0;
+    
+}
+.shadow{
+    position: absolute;
+    height:calc(100vh);
+    top:-92px;
+    width: 100vw;
+    background: rgba(rgb(80, 80, 80),0.5);
+    z-index: 1;
+    &.displayNone{
+        display: none;
+    }
+}
+.wrapper {
+    // border: 1px solid red;
+    height: 50vh;
+    margin: 60px;
+    margin-top: 10vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2em;
+    &.displayNone{
+        display: none;
+    }
+    
+    .insideWrapper {
+        border: 1px solid black;
+        padding-bottom: 30px;
+        width: 70vw;
+        z-index: 2;
+        background: white;
+        .selectTime {
+            padding: 24px 0 24px 0;
+            background: rgba(248,197,119,0.7);
+            
+            // border: 1px solid red;
+            .time{
+                padding-left: 10px;
+                // padding-right: 10px;
+            }
+        }
+
+        .start {
+            // border: 1px solid red;
+            margin: 20px 0px 30px 10px;
+            width: 70vw;
+            height: 63px;
+
+            >.startInput {
+                width: calc(70vw - 20px);
+                border-radius: 8px;
+                height: 46px;
+            }
+        }
+
+        .end {
+            // border: 1px solid pink;
+            margin-bottom: 20px;
+            margin: 0px 10px 30px 10px;
+            
+            width: 70vw;
+            // height: 63px;
+            >.endInput {
+                width: calc(70vw - 20px);
+                border-radius: 8px;
+                height: 46px;
+            }
+        }
+
+        .yesOrNo {
+            // border: 1px solid red;
+            width: 70vw;
+            text-align: right;
+            >button{
+                
+            }
+            >.cancel {
+                background: rgba(0,0,0,0);
+                border-color: rgba(0,0,0,0);
+                margin-right: 20px;
+            }
+
+            >.confirm {
+                // border: 5px solid red;
+                background: rgba(0,0,0,0);
+                border-color: rgba(0,0,0,0);
+                margin: 10px;
+                margin-right: 3vw;
+
+            }
+        }
+        
+    }
+}
