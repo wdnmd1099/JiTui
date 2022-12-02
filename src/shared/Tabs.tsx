@@ -23,7 +23,8 @@ export const Tabs = defineComponent({
                 <ol class={s.tabs_nav}>
                     {array.map(item =>
                         <li class={item.props?.name === props.selected ? s.selected : ''}
-                        onClick={()=> context.emit('update:selected',item.props?.name)}
+                        onClick={()=> {context.emit('update:selected',item.props?.name)}
+                    }
                         // 被点击的li的name传给selected，双向绑定，所以name 和 selected 永远相等
                         // 然后给被点击的li 加上样式
                         >

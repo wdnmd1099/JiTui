@@ -1,15 +1,23 @@
-.sss{
+.clickShow{
     position: absolute;
-    // border: 2px solid red;
-    height: 100vh;
+    top: 0;
+    right: 0;
+    height: 5vh;
+    width: 30vw;
+}
+.timeSelected{
+    position: fixed;
+    height: 50vh;
     width: 100vw;
-    top:0;
-    
+    top:14vh;
+    &.displayNone{
+        display: none;
+    }
 }
 .shadow{
-    position: absolute;
-    height:calc(100vh);
-    top:-92px;
+    position: fixed;
+    height:100%;
+    top:0px;
     width: 100vw;
     background: rgba(rgb(80, 80, 80),0.5);
     z-index: 1;
@@ -18,7 +26,6 @@
     }
 }
 .wrapper {
-    // border: 1px solid red;
     height: 50vh;
     margin: 60px;
     margin-top: 10vh;
@@ -40,16 +47,12 @@
         .selectTime {
             padding: 24px 0 24px 0;
             background: rgba(248,197,119,0.7);
-            
-            // border: 1px solid red;
             .time{
                 padding-left: 10px;
-                // padding-right: 10px;
             }
         }
 
         .start {
-            // border: 1px solid red;
             margin: 20px 0px 30px 10px;
             width: 70vw;
             height: 63px;
@@ -62,12 +65,10 @@
         }
 
         .end {
-            // border: 1px solid pink;
             margin-bottom: 20px;
             margin: 0px 10px 30px 10px;
             
             width: 70vw;
-            // height: 63px;
             >.endInput {
                 width: calc(70vw - 20px);
                 border-radius: 8px;
@@ -76,12 +77,8 @@
         }
 
         .yesOrNo {
-            // border: 1px solid red;
             width: 70vw;
             text-align: right;
-            >button{
-                
-            }
             >.cancel {
                 background: rgba(0,0,0,0);
                 border-color: rgba(0,0,0,0);
@@ -89,7 +86,6 @@
             }
 
             >.confirm {
-                // border: 5px solid red;
                 background: rgba(0,0,0,0);
                 border-color: rgba(0,0,0,0);
                 margin: 10px;
