@@ -1,0 +1,48 @@
+.emailInputWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .email_title{
+        margin-top: 5vh;
+        width: 90vw;
+    }
+    .emailInput{
+        width: 90vw;
+        height: 46px;
+        border-radius: 8px;
+        padding: 10px;
+        margin-top: 5px;
+    }
+}
+
+.verificationCodeInputWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .verificationCode_title{
+        margin-top: 3vh;
+        width: 90vw;
+    }
+    .verificationCodeInput{
+        margin-top: 5px;
+        width: 43vw;
+        height: 46px;
+        border-radius: 8px;
+        padding: 10px;
+    }
+    .verificationCodeButton{
+        // border: 1px solid red;
+        width: 43vw;
+        height: 46px;
+        margin-left: 4vw;
+        font-size: 18px;
+    }
+    .sign_in_button{
+        width: 90vw;
+        height: 46px;
+        margin-top: 70px;
+        
+    }
+}

@@ -15,6 +15,7 @@ import { ItemCreate } from "../components/Item/ItemCreate";
 import { TagPage } from "../views/TagPage";
 import { TagCreate } from "../components/Tags/TagCreate";
 import { TagEdit } from "../components/Tags/TagEdit";
+import { SignIn } from "../views/SignIn";
 
 //如果没反应的话先看看父路由有没有写<RouterView/>
 
@@ -43,6 +44,9 @@ export const routes: RouteRecordRaw[] = [
     children:[
       {path:'create',component:TagCreate},
       {path:':id/edit',component:TagEdit},
-  ]
-},
+    ]
+  },
+  {
+    path:'/sign_in',component:SignIn,
+  },
 ]

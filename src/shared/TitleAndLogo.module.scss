@@ -1,0 +1,17 @@
+.jitui_wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .logo{
+        padding-top: 30px;
+        width: 20vw;
+        height: 20vh; 
+        min-height: 15vw;
+        min-width: auto;
+    }
+    .title{
+        font-size: 32px;
+        color: orange;
+    }
+}
