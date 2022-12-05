@@ -14,6 +14,13 @@
         padding: 10px;
         margin-top: 5px;
     }
+    .email_err{
+        // border: 1px solid red;
+        font-size: 10px;
+        color: red;
+        width: 90vw;
+        height: 3vh;
+    }
 }
 
 .verificationCodeInputWrapper{
@@ -22,7 +29,6 @@
     align-items: center;
     flex-direction: column;
     .verificationCode_title{
-        margin-top: 3vh;
         width: 90vw;
     }
     .verificationCodeInput{
@@ -42,7 +48,14 @@
     .sign_in_button{
         width: 90vw;
         height: 46px;
-        margin-top: 70px;
+        margin-top: 60px;
         
+    }
+    .code_err{
+        // border: 1px solid red;
+        color: red;
+        font-size: 10px;
+        width: 90vw;
+        height: 3vh;
     }
 }
