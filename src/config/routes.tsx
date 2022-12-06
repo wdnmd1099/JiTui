@@ -16,6 +16,7 @@ import { TagPage } from "../views/TagPage";
 import { TagCreate } from "../components/Tags/TagCreate";
 import { TagEdit } from "../components/Tags/TagEdit";
 import { SignIn } from "../views/SignIn";
+import { StatisticsPage } from "../views/StatisticsPage";
 
 //如果没反应的话先看看父路由有没有写<RouterView/>
 
@@ -48,5 +49,12 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     path:'/sign_in',component:SignIn,
+  },
+  {
+    path:'/statistics',component:StatisticsPage,
+    children:[
+      {path:'create',component:TagCreate},
+      {path:':id/edit',component:TagEdit},
+    ]
   },
 ]

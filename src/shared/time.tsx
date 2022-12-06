@@ -1,3 +1,5 @@
+import { reactive } from "vue";
+
 /* 
   example
   import { Time } from 'shared/time';
@@ -96,7 +98,20 @@ export class Time {
 
 
 
-
+export const time = reactive([
+  {
+    startDay: new Time().firstDayOfMonth().format(),  //本月
+    endDay: new Time().lastDayOfMonth().format()
+  },
+  {
+    startDay: new Time().add(-1, 'month').firstDayOfMonth().format(), // 上月
+    endDay: new Time().add(-1, 'month').lastDayOfMonth().format()
+  },
+  {
+    startDay: new Time().firstDayOfYear().format(),  //今年
+    endDay: new Time().lastDayOfYear().format()
+  },
+])
 
 
 

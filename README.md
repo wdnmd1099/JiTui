@@ -22,10 +22,10 @@ yarn add svgstore@3.0.1
 
 yarn add vant@3.4.8   //ui库
 yarn add -D vite-plugin-style-import@1.4.1 //ui库的css加载插件 
-
 这里测试过新版的vant和vite-plugin-style-import不能一起用
 而且尝试过vant网站推荐的插件unplugin-vue-components 也是不能用的
 
+yarn add echarts@5.3.2
 
 
 ```

@@ -1,0 +1,20 @@
+.wrapper {
+    height: 20vh;
+    width: 100%;
+    border: 1px solid red;
+
+}
+
+.views {
+    height: 20vh;
+    width: 100%;
+    border: 1px solid green;
+}
+
+
+.tabs {
+    >ol {
+        z-index: 0;
+        position: relative;
+    }
+}

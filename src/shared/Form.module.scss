@@ -1,0 +1,21 @@
+.selectWrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  .select{
+    border: 2px solid rgb(82, 65, 65);
+    font-size: 1em;
+    width: 90vw;
+    height: 46px;
+    padding: 0 15px 0 15px;
+    border-radius: 8px;
+  }
+  .label{
+    // border: 1px solid red;
+    width: 90vw;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+}
