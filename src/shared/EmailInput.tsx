@@ -28,6 +28,22 @@ export const EmailInput = defineComponent({
                 { key: 'code', type: 'required', message: '必填' },
             ]))
         }
+
+        const refChangeVerificationCode = ref(false)
+        const timer = ref<number>()
+        const count = ref<number>(3)
+        const onClickVerificationCode = ()=>{
+            console.log(count.value)
+            refChangeVerificationCode.value=true
+            timer.value = setInterval(()=>{
+                count.value -= 1
+                if(count.value === 0){
+                    clearInterval(timer.value)
+                    count.value=3
+                    refChangeVerificationCode.value = false
+                }
+            },1000)
+        }
         return () => (
             <>
                 <form action="" onSubmit={onsubmit}>
@@ -41,10 +57,13 @@ export const EmailInput = defineComponent({
                         <div class={s.verificationCode_title}>验证码</div>
                         <div class={s.codeWrapper}>
                             <input type="text"  v-model={formData.code} class={s.verificationCodeInput} placeholder='输入6位数字' />
-                            <Button class={s.verificationCodeButton}>发送验证码</Button>
+                            <Button disabled={refChangeVerificationCode.value} class={s.verificationCodeButton}
+                            onClick={onClickVerificationCode}>
+                                {refChangeVerificationCode.value === false? '发送验证码' : count.value}
+                            </Button>
                             <div class={s.code_err}>{errors.code?.[0]?errors.code?.[0]:' '}</div>
                         </div>
-                        <Button class={s.sign_in_button}
+                        <Button type='submit' class={s.sign_in_button}
                             onClick={() => {}}
                         >登录</Button>
                     </div>
