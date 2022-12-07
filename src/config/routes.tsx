@@ -16,7 +16,7 @@ import { TagPage } from "../views/TagPage";
 import { TagCreate } from "../components/Tags/TagCreate";
 import { TagEdit } from "../components/Tags/TagEdit";
 import { SignIn } from "../views/SignIn";
-import { StatisticsPage } from "../views/StatisticsPage";
+import { StatisticsPage } from "../components/statistics/Charts";
 
 //如果没反应的话先看看父路由有没有写<RouterView/>
 

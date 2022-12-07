@@ -1,10 +1,7 @@
 .wrapper {
     height: 20vh;
     width: 100%;
-    border: 1px solid red;
-
 }
-
 .views {
     height: 20vh;
     width: 100%;
@@ -13,8 +10,15 @@
 
 
 .tabs {
+    background: white;
     >ol {
         z-index: 0;
         position: relative;
     }
+}
+
+.refDiv{
+    height: 300px;
+    width: auto;
+    z-index: 0;
 }
