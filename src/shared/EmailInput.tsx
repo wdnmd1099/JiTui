@@ -2,6 +2,7 @@ import axios from "axios";
 import { defineComponent, PropType, reactive, ref } from "vue";
 import { Button } from "./Button";
 import s from './EmailInput.module.scss';
+import { http } from "./Http";
 import { validate } from "./validate";
 export const EmailInput = defineComponent({
     props: {
@@ -32,17 +33,28 @@ export const EmailInput = defineComponent({
 
         const refChangeVerificationCode = ref(false)
         const timer = ref<number>()
-        const count = ref<number>(3)
+        const count = ref<number>(1)
+        const responseErr = [
+            // {errNumber:422,message:'发送失败，请检查邮箱地址是否正确'},
+            {errNumber:429,message:'发送频率过快，请稍后再试'},
+            {errNumber:500,message:'服务器繁忙'},
+        ]
         const onClickVerificationCode = async ()=>{
-            // const response = await axios.post('/api/v1/validation_codes',{email:formData.email})
-            // .catch(()=>{alert('发送失败')})
+            const response = await axios.post('/api/v1/validation_codes',{email:formData.email})
+            .catch((e)=>{
+                responseErr.map(item=>{
+                    if(e.response.status === item.errNumber){
+                        alert(item.message)
+                    }
+                })
+            })
            
             refChangeVerificationCode.value=true
             timer.value = setInterval(()=>{
                 count.value -= 1
                 if(count.value === 0){
                     clearInterval(timer.value)
-                    count.value=3
+                    count.value=1
                     refChangeVerificationCode.value = false
                 }
             },1000)
@@ -52,7 +64,7 @@ export const EmailInput = defineComponent({
                 <form action="" onSubmit={onsubmit}>
                     <div class={s.emailInputWrapper}>
                         <div class={s.email_title}>邮箱地址</div>
-                        <input type="text" v-model={formData.email} class={s.emailInput} placeholder='请输入邮箱，然后点发送验证码' />
+                        <input type="text" v-model={formData.email} class={s.emailInput}  placeholder='请输入邮箱，然后点发送验证码' />
                         <div class={s.email_err}>{errors.email?.[0]?errors.email?.[0]:' '}</div>
                     </div>
 

@@ -6,6 +6,6 @@
   },
   "include": [
     "vite.config.ts",
-    "src/vite_plugins/**/*",
-  ],
+    "src/vite_plugins/**/*"
+  ]
 }
