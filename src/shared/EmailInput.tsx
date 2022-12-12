@@ -12,7 +12,7 @@ export const EmailInput = defineComponent({
     },
     setup(props, context) {
         const formData = reactive({
-            email: '',
+            email: '879611700@qq.com',
             code: ''
         })
         const errors = reactive({
@@ -33,28 +33,30 @@ export const EmailInput = defineComponent({
 
         const refChangeVerificationCode = ref(false)
         const timer = ref<number>()
-        const count = ref<number>(1)
+        const count = ref<number>(3)
         const responseErr = [
-            // {errNumber:422,message:'发送失败，请检查邮箱地址是否正确'},
+            {errNumber:422,message:'发送失败，请检查邮箱地址是否正确'},
             {errNumber:429,message:'发送频率过快，请稍后再试'},
             {errNumber:500,message:'服务器繁忙'},
         ]
-        const onClickVerificationCode = async ()=>{
-            const response = await axios.post('/api/v1/validation_codes',{email:formData.email})
-            .catch((e)=>{
-                responseErr.map(item=>{
-                    if(e.response.status === item.errNumber){
-                        alert(item.message)
-                    }
-                })
-            })
-           
+        const onClickVerificationCode = async ()=>{  
+            // Object.assign(errors, {email: [], code: []})   // 重置发送验证码错误提示
+            // refChangeVerificationCode.value=true
+            // const response = await axios.post('/api/v1/validation_codes',{email:formData.email}) //发送验证码
+            // .catch((e)=>{
+            //     responseErr.map(item=>{
+            //         if(e.response.status === item.errNumber){
+            //             Object.assign(errors,{email:[item.message],code:[]}) // 发送验证码错误提示
+            //         }
+            //     })
+            // })
+            // refChangeVerificationCode.value = false
             refChangeVerificationCode.value=true
             timer.value = setInterval(()=>{
                 count.value -= 1
                 if(count.value === 0){
                     clearInterval(timer.value)
-                    count.value=1
+                    count.value=3
                     refChangeVerificationCode.value = false
                 }
             },1000)
