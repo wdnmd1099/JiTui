@@ -1,6 +1,5 @@
 import { Popup, DatetimePicker } from "vant";
 import { computed, defineComponent, onUpdated, PropType, reactive, ref } from "vue";
-import { ItemSummary } from "../components/Item/ItemSummary";
 import s from './TimeSelected.module.scss';
 import { Time } from "./time";
 export const TimeSelected = defineComponent({
@@ -23,7 +22,7 @@ export const TimeSelected = defineComponent({
         const setStart = (date: Date) => { refDate.start = date; hideStartDatePicker(); }
         const setEnd = (date: Date) => { refDate.end = date; hideEndDatePicker(); }
         return () => (<>
-            <div class={[s.clickShow,s.嗨]} onClick={() => {
+            <div class={[s.clickShow]} onClick={() => {
                 refCancel.value = false
             }}>
             </div>

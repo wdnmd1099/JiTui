@@ -27,7 +27,7 @@ yarn add -D vite-plugin-style-import@1.4.1 //ui库的css加载插件
 
 yarn add echarts@5.3.2
 
-
+yarn add axios@0.27.2
 ```
 
 ## 搭建完成运行 npx pnpm run dev

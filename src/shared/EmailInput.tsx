@@ -1,3 +1,4 @@
+import axios from "axios";
 import { defineComponent, PropType, reactive, ref } from "vue";
 import { Button } from "./Button";
 import s from './EmailInput.module.scss';
@@ -32,8 +33,10 @@ export const EmailInput = defineComponent({
         const refChangeVerificationCode = ref(false)
         const timer = ref<number>()
         const count = ref<number>(3)
-        const onClickVerificationCode = ()=>{
-            console.log(count.value)
+        const onClickVerificationCode = async ()=>{
+            // const response = await axios.post('/api/v1/validation_codes',{email:formData.email})
+            // .catch(()=>{alert('发送失败')})
+           
             refChangeVerificationCode.value=true
             timer.value = setInterval(()=>{
                 count.value -= 1

@@ -10,6 +10,11 @@ export default defineConfig({
   server:{
     host:'192.168.0.101',
     port:3000,
+    proxy:{
+      '/api/v1':{
+        target:'http://121.196.236.94:8080/',
+      }
+    },
   },
   plugins: [
     vue(),
