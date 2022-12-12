@@ -2,6 +2,8 @@ import axios from "axios";
 import { defineComponent, PropType, reactive, ref } from "vue";
 import { Button } from "./Button";
 import s from './EmailInput.module.scss';
+import { history } from "./history";
+import { http } from "./Http";
 import { validate } from "./validate";
 export const EmailInput = defineComponent({
     props: {
@@ -18,7 +20,7 @@ export const EmailInput = defineComponent({
             email: [],
             code: []
         })
-        const onsubmit = async (e: Event) => {
+        const onSubmit = async (e: Event) => {
             e.preventDefault()
             Object.assign(errors, {
                 email: [], code: []
@@ -30,7 +32,9 @@ export const EmailInput = defineComponent({
                 { key: 'code', type: 'pattern', regex: /[0-9]{6}/gm, message: '必须是6位数字' },
             ]))
             if (errors.code.length === 0 && errors.email.length === 0) { // 没有任何错误信息再提交登录
-                const response = await axios.post('/session', formData)
+                const response = await http.post<{ jwt: string }>('/session', formData)
+                localStorage.setItem('jwt', response.data.jwt)
+                history.push('/')
             }
 
         }
@@ -75,7 +79,7 @@ export const EmailInput = defineComponent({
         }
         return () => (
             <>
-                <form action="" onSubmit={onsubmit}>
+                <form action="" onSubmit={onSubmit}>
                     <div class={s.emailInputWrapper}>
                         <div class={s.email_title}>邮箱地址</div>
                         <input type="text" v-model={formData.email} class={s.emailInput} placeholder='请输入邮箱，然后点发送验证码' />

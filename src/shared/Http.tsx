@@ -28,15 +28,15 @@ export class Http {
 
 export const http = new Http('/api/v1')
 
-// http.instance.interceptors.response.use(response=>{
-//   console.log('response')
-//   return response
-// }, (error) => {
-//   if(error.response){
-//     const axiosError = error as AxiosError
-//     if(axiosError.response?.status === 429){
-//       alert('你太频繁了')
-//     }
-//   }
-//   throw error
-// })
+http.instance.interceptors.response.use(response=>{
+  console.log('response')
+  return response
+}, (error) => {
+  if(error.response){
+    const axiosError = error as AxiosError
+    if(axiosError.response?.status === 429){
+      alert('你太频繁了')
+    }
+  }
+  throw error
+})
