@@ -25,6 +25,9 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/welcome',
     component: Welcome,
+    beforeEnter:(to,form,next)=>{  //进入前先看看之前是否按过跳过，如果之前按过跳过，就不需要再看一次欢迎界面了
+      localStorage.getItem('skipFeatures') === 'yes' ? next('/start') : next()
+    },
     children: [
       { path: '', redirect: '/welcome/1', },
       { path: '1', name: 'welcome1', components: { main: First, footer: FirstActions }, },
