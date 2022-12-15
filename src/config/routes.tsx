@@ -17,7 +17,7 @@ import { TagCreate } from "../components/Tags/TagCreate";
 import { TagEdit } from "../components/Tags/TagEdit";
 import { SignIn } from "../views/SignIn";
 import { StatisticsPage } from "../components/statistics/Charts";
-
+import { http } from "../shared/Http";
 //如果没反应的话先看看父路由有没有写<RouterView/>
 
 export const routes: RouteRecordRaw[] = [
@@ -38,6 +38,12 @@ export const routes: RouteRecordRaw[] = [
   },
   { path: '/start', component: StartPage },
   { path: '/items', component: ItemPage,
+    beforeEnter:async(to,from,next)=>{
+     await http.get('/me').catch(()=>{
+        next('/sign_in?return_to=' + to.path)
+     })
+     next()
+    },
     children:[
       {path:'',component:ItemList},
       {path:'create',component:ItemCreate},
