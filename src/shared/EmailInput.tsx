@@ -1,9 +1,10 @@
 import axios from "axios";
-import { defineComponent, PropType, reactive, ref } from "vue";
+import { computed, defineComponent, PropType, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { Button } from "./Button";
 import s from './EmailInput.module.scss';
-import { http } from "./Http";
+import { http, wrongMessage } from "./Http";
+import { refreshMe } from "./me";
 import { validate } from "./validate";
 export const EmailInput = defineComponent({
     props: {
@@ -14,13 +15,13 @@ export const EmailInput = defineComponent({
     setup(props, context) {
         const formData = reactive({
             email: '879611700@qq.com',
-            code: '296272'
+            code: '437382'
         })
         const errors = reactive({
             email: [],
             code: []
         })
-        const router  = useRouter()
+        const router = useRouter()
         const onSubmit = async (e: Event) => {
             e.preventDefault()
             Object.assign(errors, {
@@ -36,7 +37,10 @@ export const EmailInput = defineComponent({
                 const response = await http.post<{ jwt: string }>('/session', formData)
                 localStorage.setItem('jwt', response.data.jwt)
                 const returnTo = localStorage.getItem('returnTo')
-                router.push(returnTo ? returnTo : '/') 
+                refreshMe()
+                router.push(returnTo ? returnTo : '/')
+                
+                
             }
 
         }
@@ -72,7 +76,7 @@ export const EmailInput = defineComponent({
                             }
                         })
                     })
-            }else{
+            } else {
                 Object.assign(errors, { email: ['发送失败，请检查邮箱地址是否正确'], code: [] })
             }
 

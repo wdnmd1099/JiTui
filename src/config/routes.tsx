@@ -38,12 +38,13 @@ export const routes: RouteRecordRaw[] = [
   },
   { path: '/start', component: StartPage },
   { path: '/items', component: ItemPage,
-    beforeEnter:async(to,from,next)=>{
-     await http.get('/me').catch(()=>{
-        next('/sign_in?return_to=' + to.path)
-     })
-     next()
-    },
+    // 下面这些没用，只做解释学习用，在main.tsx 里做了统筹的白名单，非白名单都检查是否登录
+    // beforeEnter:async(to,from,next)=>{ //在进入此页面之前，向服务器发送一个get请求查看用户的me文件
+    //  await http.get('/me').catch(()=>{ //如果服务器没有就会返回错误码，有错误码就跳转到登录页面
+    //     next('/sign_in?return_to=' + to.path)
+    //  })
+    //  next()
+    // },
     children:[
       {path:'',component:ItemList},
       {path:'create',component:ItemCreate},

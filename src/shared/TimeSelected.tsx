@@ -1,5 +1,5 @@
 import { Popup, DatetimePicker } from "vant";
-import { computed, defineComponent, onUpdated, PropType, reactive, ref } from "vue";
+import { defineComponent, PropType, reactive, ref } from "vue";
 import s from './TimeSelected.module.scss';
 import { Time } from "./time";
 export const TimeSelected = defineComponent({

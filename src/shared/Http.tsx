@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import { ref } from "vue";
 type JSONValue = string | number | null | boolean | JSONValue[] | { [key: string]: JSONValue };
 
 export class Http {
@@ -38,7 +39,7 @@ http.instance.interceptors.request.use((config)=>{  //这行是添加请求拦�
 })
 
 
-
+export let wrongMessage = ref('');
 http.instance.interceptors.response.use(response => { //这行是添加响应拦截器，也接收两个函数
   //第一个是状态码200以内的数据触发第一个函数，状态码200以外的触发第二个函数，200以内都是响应成功的，以外的是不成功的
   console.log('response')

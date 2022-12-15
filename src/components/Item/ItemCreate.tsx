@@ -1,4 +1,5 @@
 import { defineComponent, PropType, ref } from "vue";
+import { RouterLink, useRouter } from "vue-router";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Icon } from "../../shared/Icon";
 import { Tab, Tabs } from "../../shared/Tabs";
@@ -58,12 +59,15 @@ export const ItemCreate = defineComponent({
       { id: 4, name: '工资', sign: '￥', category: 'income' },
       { id: 5, name: '彩票', sign: '￥', category: 'income' },
     ])
-    const xx =()=>{console.log(1)}
+
+    const router = useRouter()
     return ()=>(
       <MainLayout>{
         {
           title:()=>'记一笔',
-          icon:()=><Icon name='left' class={s.navIcon}></Icon>,
+          icon:()=><Icon name='left' class={s.navIcon} onClick={()=>{
+            router.push('/start')
+          }}></Icon>,
           default:()=> <>
           <div class={s.wrapper}>
                 {/* <Tabs selected={refKind.value}  onUpdateSelected={(name:string) => refKind.value = name}> */}
