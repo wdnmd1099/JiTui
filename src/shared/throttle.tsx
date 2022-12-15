@@ -4,7 +4,7 @@ export const throttle = (fn:Function,time:number)=>{
     return ()=>{
         if(timer === undefined){
             fn()
-            timer = setTimeout(() => {
+            timer = setTimeout(() => { //在time走完之前，settimeout 是数字，time走完后，timer才 = undefined
                 timer = undefined
             }, time);
         }else{

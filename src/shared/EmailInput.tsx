@@ -1,8 +1,8 @@
 import axios from "axios";
 import { defineComponent, PropType, reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 import { Button } from "./Button";
 import s from './EmailInput.module.scss';
-import { history } from "./history";
 import { http } from "./Http";
 import { validate } from "./validate";
 export const EmailInput = defineComponent({
@@ -13,13 +13,14 @@ export const EmailInput = defineComponent({
     },
     setup(props, context) {
         const formData = reactive({
-            email: '',
-            code: ''
+            email: '1@qq.com',
+            code: '111111'
         })
         const errors = reactive({
             email: [],
             code: []
         })
+        const router  = useRouter()
         const onSubmit = async (e: Event) => {
             e.preventDefault()
             Object.assign(errors, {
@@ -34,7 +35,8 @@ export const EmailInput = defineComponent({
             if (errors.code.length === 0 && errors.email.length === 0) { // 没有任何错误信息再提交登录
                 const response = await http.post<{ jwt: string }>('/session', formData)
                 localStorage.setItem('jwt', response.data.jwt)
-                history.push('/')
+                const returnTo = localStorage.getItem('returnTo')
+                router.push(returnTo ? returnTo : '/') 
             }
 
         }
