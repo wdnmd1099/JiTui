@@ -1,6 +1,7 @@
-import { defineComponent, PropType, ref } from "vue";
-import { RouterLink, useRouter } from "vue-router";
+import { defineComponent, onBeforeMount, onMounted, PropType, ref, Transition } from "vue";
+import { useRouter } from "vue-router";
 import { MainLayout } from "../../layouts/MainLayout";
+import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { InputPad } from "./InputPad";
@@ -13,52 +14,18 @@ export const ItemCreate = defineComponent({
   },
   setup(props,context){
     const refKind = ref('支出')
-    const refExpensesTags = ref([
-      { id: 1, name: '餐费', sign: '￥', category: 'expenses' },
-      { id: 2, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 3, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 4, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 5, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 6, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 7, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 1, name: '餐费', sign: '￥', category: 'expenses' },
-      { id: 2, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 3, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 4, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 5, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 6, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 7, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 1, name: '餐费', sign: '￥', category: 'expenses' },
-      { id: 2, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 3, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 4, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 5, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 6, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 7, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 1, name: '餐费', sign: '￥', category: 'expenses' },
-      { id: 2, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 3, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 4, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 5, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 6, name: '打车', sign: '￥', category: 'expenses' },
-      { id: 7, name: '聚餐', sign: '￥', category: 'expenses' },
-      { id: 4, name: '工资', sign: '￥', category: 'income' },
-      { id: 5, name: '彩票', sign: '￥', category: 'income' },
-      { id: 6, name: '滴滴', sign: '￥', category: 'income' },
-      { id: 11, name: '彩票', sign: '￥', category: 'income' },
-      { id: 4, name: '工资', sign: '￥', category: 'income' },
-    ])
-    const refIncomeTags = ref([
-      { id: 4, name: '工资', sign: '￥', category: 'income' },
-      { id: 5, name: '彩票', sign: '￥', category: 'income' },
-      { id: 6, name: '滴滴', sign: '￥', category: 'income' },
-      { id: 11, name: '彩票', sign: '￥', category: 'income' },
-      { id: 18, name: '滴滴', sign: '￥', category: 'income' },
-      { id: 17, name: '彩票', sign: '￥', category: 'income' },
-      { id: 19, name: '滴滴', sign: '￥', category: 'income' },
-      { id: 4, name: '工资', sign: '￥', category: 'income' },
-      { id: 5, name: '彩票', sign: '￥', category: 'income' },
-    ])
+    onBeforeMount(async ()=>{
+      const response:any = await http.get('/tags',{
+        kind:'expenses',
+      })
+      const response1:any = await http.get('/tags',{
+        kind:'income',
+      })
+      refExpensesTags.value = response.data.resources
+      refIncomeTags.value = response1.data.resources
+    })
+    const refExpensesTags = ref()
+    const refIncomeTags = ref()
 
     const router = useRouter()
     return ()=>(
@@ -69,6 +36,16 @@ export const ItemCreate = defineComponent({
             router.push('/start')
           }}></Icon>,
           default:()=> <>
+          {/*下面是loading界面*/}
+          <div class={refIncomeTags.value?s.loadingCompleted : s.loading}>
+            <div class={s.loaderWrapper}>
+              <div class={s.loader}/>
+              <div class={s.loaderText}>{refExpensesTags.value? '' : '加载中...' }</div>
+            </div>
+          </div>
+
+          
+          
           <div class={s.wrapper}>
                 {/* <Tabs selected={refKind.value}  onUpdateSelected={(name:string) => refKind.value = name}> */}
                 {/* 上下都能用，但是也要改Tabs.tsx的 */}
@@ -84,7 +61,7 @@ export const ItemCreate = defineComponent({
                     新增
                   </div>
                 </div>
-                {refExpensesTags.value.map(tag =>
+                {refExpensesTags.value?.map((tag: { sign: any; name: any; }) =>
                   <div class={[s.tag, s.selected]}>
                     <div class={s.sign}>
                       {tag.sign}
@@ -104,7 +81,7 @@ export const ItemCreate = defineComponent({
                     新增
                   </div>
                 </div>
-                {refIncomeTags.value.map(tag =>
+                {refIncomeTags.value.map((tag: { sign: any; name: any; }) =>
                   <div class={[s.tag, s.selected]}>
                     <div class={s.sign}>
                       {tag.sign}
