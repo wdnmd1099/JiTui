@@ -1,9 +1,9 @@
 import axios from "axios";
-import { computed, defineComponent, PropType, reactive, ref } from "vue";
+import { defineComponent, PropType, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { Button } from "./Button";
 import s from './EmailInput.module.scss';
-import { http, wrongMessage } from "./Http";
+import { http } from "./Http";
 import { refreshMe } from "./me";
 import { validate } from "./validate";
 export const EmailInput = defineComponent({
@@ -14,14 +14,20 @@ export const EmailInput = defineComponent({
     },
     setup(props, context) {
         const formData = reactive({
-            email: '879611700@qq.com',
-            code: '437382'
+            email: '88888888@qq.com',
+            code: '123123'
         })
         const errors = reactive({
             email: [],
             code: []
         })
         const router = useRouter()
+        const onError = (error: any) => {
+            if (error.response.status === 422) {
+              Object.assign(errors, error.response.data.errors)
+            }
+            throw error
+          }
         const onSubmit = async (e: Event) => {
             e.preventDefault()
             Object.assign(errors, {
@@ -35,14 +41,13 @@ export const EmailInput = defineComponent({
             ]))
             if (errors.code.length === 0 && errors.email.length === 0) { // 没有任何错误信息再提交登录
                 const response = await http.post<{ jwt: string }>('/session', formData)
+                 .catch(onError)
+                console.log(response)
                 localStorage.setItem('jwt', response.data.jwt)
                 const returnTo = localStorage.getItem('returnTo')
                 refreshMe()
                 router.push(returnTo ? returnTo : '/')
-                
-                
             }
-
         }
 
         const refChangeVerificationCode = ref(false)

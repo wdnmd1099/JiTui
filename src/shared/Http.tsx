@@ -1,6 +1,10 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
-import { ref } from "vue";
-type JSONValue = string | number | null | boolean | JSONValue[] | { [key: string]: JSONValue };
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { mockMe, mockSession, mockTagIndex } from "../mock/mock";
+
+type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
+type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
+type PatchConfig = Omit<AxiosRequestConfig, 'url' | 'data'>
+type DeleteConfig = Omit<AxiosRequestConfig, 'params'>
 
 export class Http {
   instance: AxiosInstance
@@ -9,47 +13,68 @@ export class Http {
       baseURL
     })
   }
-  // read
-  get<R = unknown>(url: string, query?: Record<string, string>, config?: Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>) {
+  get<R = unknown>(url: string, query?: Record<string, JSONValue>, config?: GetConfig) {
     return this.instance.request<R>({ ...config, url: url, params: query, method: 'get' })
   }
-  // create
-  post<R = unknown>(url: string, data?: Record<string, JSONValue>, config?: Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>) {
+  post<R = unknown>(url: string, data?: Record<string, JSONValue>, config?: PostConfig) {
     return this.instance.request<R>({ ...config, url, data, method: 'post' })
   }
-  // update
-  patch<R = unknown>(url: string, data?: Record<string, JSONValue>, config?: Omit<AxiosRequestConfig, 'url' | 'data'>) {
+  patch<R = unknown>(url: string, data?: Record<string, JSONValue>, config?: PatchConfig) {
     return this.instance.request<R>({ ...config, url, data, method: 'patch' })
   }
-  // destroy
-  delete<R = unknown>(url: string, query?: Record<string, string>, config?: Omit<AxiosRequestConfig, 'params'>) {
+  delete<R = unknown>(url: string, query?: Record<string, string>, config?: DeleteConfig) {
     return this.instance.request<R>({ ...config, url: url, params: query, method: 'delete' })
   }
 }
 
+const mock = (response: AxiosResponse) => {
+  if (location.hostname !== 'localhost'
+    && location.hostname !== '127.0.0.1'
+    && location.hostname !== '192.168.0.101') { return false }
+  switch (response.config?.params?._mock) {
+    case 'tagIndex':
+      [response.status, response.data] = mockTagIndex(response.config)
+      console.log('response')
+      console.log(response)
+      return true
+    case 'session':
+      [response.status, response.data] = mockSession(response.config)
+      return true
+    case 'me':
+      [response.status, response.data] = mockMe(response.config)
+  }
+  return false
+}
+
 export const http = new Http('/api/v1')
 
-http.instance.interceptors.request.use((config)=>{  //这行是添加请求拦截器 config 是请求相关的所有配置
-  // 拦截器可以接收两个函数，第一个是请求成功做些什么，第二个是请求失败做些什么，具体看文档
-  const jwt = localStorage.getItem('jwt')  //这下面几行都是为http的所有请求的头加上jwt的字符串，在本项目用来验证登录是否通过服务器验证
-  if(jwt){
+http.instance.interceptors.request.use(config => {
+  const jwt = localStorage.getItem('jwt')
+  if (jwt) {
     config.headers!.Authorization = `Bearer ${jwt}`
   }
   return config
 })
 
-
-export let wrongMessage = ref('');
-http.instance.interceptors.response.use(response => { //这行是添加响应拦截器，也接收两个函数
-  //第一个是状态码200以内的数据触发第一个函数，状态码200以外的触发第二个函数，200以内都是响应成功的，以外的是不成功的
-  console.log('response')
+http.instance.interceptors.response.use((response) => {
+  mock(response)
   return response
 }, (error) => {
-  if (error.response) {
-    const axiosError = error as AxiosError
-    if (axiosError.response?.status === 429) {
-      alert('你太频繁了')
-    }
+  if (mock(error.response)) {
+    return error.response
+  } else {
+    throw error
   }
-  throw error
 })
+http.instance.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response) {
+      const axiosError = error as AxiosError
+      if (axiosError.response?.status === 429) {
+        alert('你太频繁了')
+      }
+    }
+    throw error
+  }
+)
