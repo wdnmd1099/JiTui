@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { mockSession, mockTagIndex } from "../mock/mock";
+import { loaderSwitch } from "./Loader";
 
 type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
@@ -45,6 +46,22 @@ const mock = (response: AxiosResponse) => {
 }
 
 export const http = new Http('/api/v1')
+
+http.instance.interceptors.request.use(config => {
+  loaderSwitch.value = true
+  return config
+},()=>{
+  loaderSwitch.value = false
+})
+
+http.instance.interceptors.response.use((response) => {
+  loaderSwitch.value = false
+  return response
+}, (error) => {
+  loaderSwitch.value = false
+  throw error
+})
+
 
 http.instance.interceptors.request.use(config => {
   const jwt = localStorage.getItem('jwt')
