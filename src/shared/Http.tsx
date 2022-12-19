@@ -28,8 +28,8 @@ export class Http {
   }
 }
 
-const mock = (response: AxiosResponse) => {
-  if (location.hostname !== 'localhost'
+const mock = (response: AxiosResponse) => { //非本地地址不用mock，所以可以把这些代码放到线上环境
+  if (location.hostname !== 'localhost' 
     && location.hostname !== '127.0.0.1'
     && location.hostname !== '192.168.0.101') { return false }
   switch (response.config?.params?._mock) {
@@ -41,20 +41,23 @@ const mock = (response: AxiosResponse) => {
     case 'session':
       [response.status, response.data] = mockSession(response.config)
       return true
+      case 'me':
+      [response.status, response.data] = mockSession(response.config)
+      return true
   }
   return false
 }
 
 export const http = new Http('/api/v1')
 
-http.instance.interceptors.request.use(config => {
+http.instance.interceptors.request.use(config => { //请求前显示loader，无论请求成功或失败都关闭loader
   loaderSwitch.value = true
   return config
 },()=>{
   loaderSwitch.value = false
 })
 
-http.instance.interceptors.response.use((response) => {
+http.instance.interceptors.response.use((response) => { //响应成功或失败都关闭loader
   loaderSwitch.value = false
   return response
 }, (error) => {

@@ -16,9 +16,11 @@ export const ItemCreate = defineComponent({
     const refKind = ref('支出')
     onBeforeMount(async ()=>{
       const response:any = await http.get('/tags',{
+        _mock:'tagIndex',
         kind:'expenses',
       })
       const response1:any = await http.get('/tags',{
+        _mock:'tagIndex',
         kind:'income',
       })
       refExpensesTags.value = response.data.resources
