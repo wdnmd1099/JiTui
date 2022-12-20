@@ -110,7 +110,8 @@ export const ItemCreate = defineComponent({
                     </div>
                   </div>
                   {refIncomeTags.value.map((tag: { sign: any; name: any; id:any}) =>
-                    <div class={[s.tag, s.selected]} onClick={()=>{
+                    <div class={[s.tag, [itemSelected.value.id === tag.id ? s.selected : '']]} 
+                    onClick={()=>{
                       itemSelected.value.name = tag.name;
                       itemSelected.value.sign = tag.sign;
                       itemSelected.value.id = tag.id;
