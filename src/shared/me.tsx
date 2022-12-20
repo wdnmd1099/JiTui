@@ -8,7 +8,7 @@ export let mePromise:Promise<AxiosResponse<{
 }>> | undefined
 
 export const refreshMe = ()=>{
-   mePromise = http.get<{ resource:{ id:number }}>('/me',{_mock:'me'})
+   mePromise = http.get<{ resource:{ id:number }}>('/me')
    return mePromise
 }
 

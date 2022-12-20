@@ -40,8 +40,7 @@ export const EmailInput = defineComponent({
                 { key: 'code', type: 'pattern', regex: /[0-9]{6}/gm, message: '必须是6位数字' },
             ]))
             if (errors.code.length === 0 && errors.email.length === 0) { // 没有任何错误信息再提交登录
-                const response = await http.post<{ jwt: string }>('/session', formData,
-                    {params:{_mock:'session'}})
+                const response = await http.post<{ jwt: string }>('/session', formData,)
                  .catch(onError)
                 console.log(response)
                 localStorage.setItem('jwt', response.data.jwt)

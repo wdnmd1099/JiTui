@@ -57,6 +57,16 @@
     display: flex;
     flex-wrap: wrap;
     padding-top: 16px;
+    .loadMoreTagsWrapper{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 15px;
+      .noMoreTags{
+        color: gray;
+      }
+    }
   }
   .createTag {
     fill: var(--main);
