@@ -24,7 +24,7 @@ export const ItemCreate = defineComponent({
   },
   setup(props, context) {
     const router = useRouter()
-
+    const createTag = '/tags/create'
     onBeforeMount(async () => {
       const response: any = await http.get('/tags', {
         // _mock:'tagIndex',
@@ -72,7 +72,7 @@ export const ItemCreate = defineComponent({
                     <div class={s.sign}>
                       <Icon name="add" class={s.createTag} />
                     </div>
-                    <div class={s.name}>
+                    <div class={s.name} onClick={()=>{router.push(createTag)}}>
                       新增
                     </div>
                   </div>
@@ -97,7 +97,7 @@ export const ItemCreate = defineComponent({
                     <div class={s.sign}>
                       <Icon name="add" class={s.createTag} />
                     </div>
-                    <div class={s.name}>
+                    <div class={s.name} onClick={()=>{router.push(createTag)}}>
                       新增
                     </div>
                   </div>

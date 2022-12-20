@@ -12,7 +12,7 @@ export const TagForm = defineComponent({
   setup(props,context){
     const formData = reactive({
         name: '',
-        sign: ' ',
+        sign: '',
       })
       const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
       const onSubmit = (e: Event) => {
@@ -34,7 +34,9 @@ export const TagForm = defineComponent({
               <label class={s.formLabel}>
                 <span class={s.formItem_name}>标签名</span>
                 <div class={s.formItem_value}>
-                  <input v-model={formData.name} class={[s.formItem, s.input,s.error]}></input>
+                  <input v-model={formData.name} class={[s.formItem, s.input,
+                    [formData.name === '' ? s.error : ''],
+                    [formData.name.length > 4 ? s.error : '']]}></input>
                 </div>
                 <div class={s.formItem_errorHint}>
                   <span>{errors['name']?errors['name'][0] : ' '}</span>
@@ -61,7 +63,7 @@ export const TagForm = defineComponent({
             <p class={s.tips}>记账时长按标签即可进行编辑</p>
             <div class={s.formRow}>
               <div class={s.formItem_value}>
-                <Button class={[s.formItem, s.button]}>确定</Button>
+                <Button type="submit" class={[s.formItem, s.button]}>确定</Button>
               </div>
             </div>
           </form>
