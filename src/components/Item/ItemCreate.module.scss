@@ -95,6 +95,7 @@
     &.selected {
       .sign {
         border-color: var(--main);
+        background: var(--main);
       }
     }
   }

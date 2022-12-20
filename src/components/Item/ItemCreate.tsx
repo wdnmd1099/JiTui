@@ -14,7 +14,7 @@ import s from './ItemCreate.module.scss';
 export const refKind = ref('支出') // 现在所在的页面
 export const refExpensesTags = ref<any>() // 支出标签
 export const refIncomeTags = ref() //收入标签
-
+export const itemSelected = ref({name:'',sign:'',id:1}) //当前选中的标签 , id是每个表情都有的随机数字
 
 export const ItemCreate = defineComponent({
   props: {
@@ -25,6 +25,8 @@ export const ItemCreate = defineComponent({
   setup(props, context) {
     const router = useRouter()
     const createTag = '/tags/create'
+    
+
     onBeforeMount(async () => {
       const response: any = await http.get('/tags', {
         // _mock:'tagIndex',
@@ -76,8 +78,14 @@ export const ItemCreate = defineComponent({
                       新增
                     </div>
                   </div>
-                  {refExpensesTags.value?.map((tag: { sign: any; name: any; }) =>
-                    <div class={[s.tag, s.selected]}>
+                  {refExpensesTags.value?.map((tag: { sign: any; name: any; id:any}) =>
+                    <div class={[s.tag, [itemSelected.value.id === tag.id ? s.selected : '']]} 
+                    onClick={()=>{
+                      itemSelected.value.name = tag.name;
+                      itemSelected.value.sign = tag.sign;
+                      itemSelected.value.id = tag.id;
+                      console.log(itemSelected.value)
+                      }}>
                       <div class={s.sign}>
                         {tag.sign}
                       </div>
@@ -101,8 +109,13 @@ export const ItemCreate = defineComponent({
                       新增
                     </div>
                   </div>
-                  {refIncomeTags.value.map((tag: { sign: any; name: any; }) =>
-                    <div class={[s.tag, s.selected]}>
+                  {refIncomeTags.value.map((tag: { sign: any; name: any; id:any}) =>
+                    <div class={[s.tag, s.selected]} onClick={()=>{
+                      itemSelected.value.name = tag.name;
+                      itemSelected.value.sign = tag.sign;
+                      itemSelected.value.id = tag.id;
+                      console.log(itemSelected.value)
+                      }}>
                       <div class={s.sign}>
                         {tag.sign}
                       </div>
