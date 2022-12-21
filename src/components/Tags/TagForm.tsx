@@ -1,21 +1,29 @@
 import { defineComponent, PropType, reactive} from "vue";
+import { useRouter } from "vue-router";
 import { Button } from "../../shared/Button";
 import { EmojiSelect } from "../../shared/EmojiSelect";
+import { http } from "../../shared/Http";
 import { Rules, validate } from "../../shared/validate";
+import { refKind } from "../Item/ItemCreate";
 import s from './Tag.module.scss';
 export const TagForm = defineComponent({
-  props:{
-    name:{
-        type:String as PropType<string>
-    }
-  },
   setup(props,context){
+    const router = useRouter()
+    const refChangeEnglishName = ()=>{ 
+      if(refKind.value === '支出'){
+        return 'expenses'
+      }else if(refKind.value === '收入'){
+        return 'income'
+      }
+    }
     const formData = reactive({
         name: '',
         sign: '',
+        kind:refChangeEnglishName(),
       })
       const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
-      const onSubmit = (e: Event) => {
+      const onSubmit = async (e: Event) => {
+        e.preventDefault()
         const rules: Rules<typeof formData> = [
           { key: 'name', type: 'required', message: '必填' },
           { key: 'name', type: 'pattern', regex: /^.{1,4}$/, message: '只能填 1 到 4 个字符' },
@@ -26,7 +34,14 @@ export const TagForm = defineComponent({
           sign: undefined
         })
         Object.assign(errors, validate(formData, rules))
-        e.preventDefault()
+        if(errors.name === undefined && errors.sign === undefined){
+          const response = await http.post(`/tags`,formData,)
+            .catch(()=>{
+              alert('传递参数错误')
+            })
+            router.push('/items/create')
+        }
+        
       }
     return ()=>(
         <form class={s.form} onSubmit={onSubmit}>

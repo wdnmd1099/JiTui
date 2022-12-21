@@ -4,6 +4,7 @@ import { http } from "./Http"
 export let mePromise:Promise<AxiosResponse<{
     resource:{
         id:number;
+        email?:string;
     };
 }>> | undefined
 
