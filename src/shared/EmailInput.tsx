@@ -42,7 +42,6 @@ export const EmailInput = defineComponent({
             if (errors.code.length === 0 && errors.email.length === 0) { // 没有任何错误信息再提交登录
                 const response = await http.post<{ jwt: string }>('/session', formData,)
                  .catch(onError)
-                console.log(response)
                 localStorage.setItem('jwt', response.data.jwt)
                 const returnTo = localStorage.getItem('returnTo')
                 refreshMe()
