@@ -1,4 +1,5 @@
 import { defineComponent, PropType, ref } from "vue";
+import { refExpensesMoney, refIncomeMoney } from "./ItemList";
 import s from './ItemSummary.module.scss';
 export const ItemSummary = defineComponent({
   props: {
@@ -19,31 +20,32 @@ export const ItemSummary = defineComponent({
         <div class={s.total}>
           <li class={s.income}>
             <span>收入</span>
-            <span>￥ 0.00</span>
+            <span>￥ {refExpensesMoney.value}</span>
           </li>
           <li class={s.expenditure}>
             <span>支出</span>
-            <span>￥ 0.00</span>
+            <span>￥ {refIncomeMoney.value}</span>
           </li>
           <li class={s.netIncome}>
             <span>净收入</span>
-            <span>￥ 0.00</span>
+            <span>￥ {refIncomeMoney.value - refExpensesMoney.value}</span>
           </li>
         </div>
         {props.refData?.map((item: {
-          time: any; id: any; money: any;
-        }) =>
-        (
+            kind: any;tags: any; created_at: any; id: any; amount: any;
+        }) =>{ 
+          const time = item.created_at.match(/^.{10}/gm)[0]
+           + " "+ item.created_at.match(/.{2}:.{2}:.{2}/gm)[0];
+        return(
           <div class={s.wrapper} onClick={() => { console.log(props.startDate, props.endDate) }}>
-            <div class={s.emoji}>￥</div>
+            <div class={s.emoji}>{item.tags[0].sign}</div>
             <span class={s.id}>
               {item.id}
             </span>
-            <span class={s.time}>{item.time}</span>
-
-            <span class={s.money}>￥ {item.money}</span>
+            <span class={s.time}>{time}</span>
+            <span class={[s.money,[item.kind==='expenses'?'':s.IncomeMoney]]}>￥ {item.amount/100}</span>
           </div>
-        )
+        )}
         )
         }
         <div>{context.slots?.default?.()}</div>

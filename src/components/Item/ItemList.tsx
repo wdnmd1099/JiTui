@@ -1,13 +1,16 @@
-import { defineComponent, PropType, reactive, ref } from "vue";
+import { defineComponent, onBeforeMount, PropType, ref } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Icon } from "../../shared/Icon";
 import { Overlay } from "../../shared/Overlay";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { TimeSelected } from "../../shared/TimeSelected";
-import { time, Time } from "../../shared/time";
+import { time } from "../../shared/time";
 import s from './ItemList.module.scss';
 import { ItemSummary } from "./ItemSummary";
-import { ItemData } from "./ItemData";
+import { http } from "../../shared/Http";
+
+export let refExpensesMoney = ref(0);
+export let refIncomeMoney = ref(0);
 export const ItemList = defineComponent({
   props: {
     name: {
@@ -15,13 +18,32 @@ export const ItemList = defineComponent({
     }
   },
   setup(props, context) {
+    onBeforeMount(async()=>{
+        const response:any =  await http.get('items',{page:2})
+        refData.value = response.data.resources
+        console.log(response.data.resources)
+        if(refData.value){
+          refData.value.map((item: any)=>{
+            if(item.kind === "expenses"){
+              refExpensesMoney.value += item.amount
+            }else if(item.kind === "income"){
+              refIncomeMoney.value += item.amount
+            }
+          })
+          refIncomeMoney.value=refIncomeMoney.value/100
+        }
+    })
+
+
+
     const refSelected = ref('本月')
-    // time
-    const refData = ref(ItemData)
+    const refData = ref()
     const overlayVisible = ref(false)
     const onClickMenu = () => {
       overlayVisible.value = !overlayVisible.value;
     }
+
+  
     return () => (<>
       <MainLayout>{
         {

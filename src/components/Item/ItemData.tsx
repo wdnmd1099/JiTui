@@ -1,5 +1,8 @@
+import { ref } from "vue"
 
-export const ItemData =  [
+
+
+export let refItemData =  ref([
         {id:'旅行',time:'2022-11-23',money:'9999'},
         {id:'旅行',time:'2022-11-23',money:'9999'},
         {id:'旅行',time:'2022-11-23',money:'3'},
@@ -11,4 +14,4 @@ export const ItemData =  [
         {id:'旅行',time:'2022-11-23',money:'1'},
         {id:'旅行',time:'2022-11-23',money:'3'},
         {id:'旅行',time:'2022-11-23',money:'2632'},
-      ]
+      ])

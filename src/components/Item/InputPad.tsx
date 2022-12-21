@@ -64,7 +64,6 @@ export const InputPad = defineComponent({
         }
         console.log(x)
         http.post('/items', x)
-        http.get('items')
       }
     },
     ]
