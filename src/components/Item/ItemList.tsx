@@ -16,7 +16,7 @@ export const ItemList = defineComponent({
   },
   setup(props, context) {
     const refSelected = ref('本月')
-    time
+    // time
     const refData = ref(ItemData)
     const overlayVisible = ref(false)
     const onClickMenu = () => {
