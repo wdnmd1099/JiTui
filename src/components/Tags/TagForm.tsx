@@ -6,16 +6,17 @@ import { http } from "../../shared/Http";
 import { Rules, validate } from "../../shared/validate";
 import { refKind } from "../Item/ItemCreate";
 import s from './Tag.module.scss';
+export const refChangeEnglishName = ()=>{ 
+  if(refKind.value === '支出'){
+    return 'expenses'
+  }else if(refKind.value === '收入'){
+    return 'income'
+  }
+}
 export const TagForm = defineComponent({
   setup(props,context){
     const router = useRouter()
-    const refChangeEnglishName = ()=>{ 
-      if(refKind.value === '支出'){
-        return 'expenses'
-      }else if(refKind.value === '收入'){
-        return 'income'
-      }
-    }
+    
     const formData = reactive({
         name: '',
         sign: '',

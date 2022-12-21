@@ -2,7 +2,10 @@ import { defineComponent, PropType, ref } from "vue";
 import { Icon } from "../../shared/Icon";
 import { Time } from "../../shared/time";
 import s from './InputPad.module.scss';
-import { DatetimePicker, Popup } from 'vant';
+import { DatetimePicker, Popup, Toast } from 'vant';
+import { itemSelected } from "./ItemCreate";
+import { refChangeEnglishName } from "../Tags/TagForm";
+import { http } from "../../shared/Http";
 export const InputPad = defineComponent({
   props:{
     name:{
@@ -48,7 +51,20 @@ export const InputPad = defineComponent({
       {text:'0',onclick:()=>{appendText(0)}},
       {text:'清空',onclick:()=>{refAmount.value = '0'}},
       {text:'提交',onclick:()=>{
-        console.log((document.querySelector('.xxxx') as HTMLInputElement).innerText) 
+        if( !itemSelected.value.name ){
+          Toast('请填入账目标签')
+        }
+        const x = {
+          amount:parseFloat(refAmount.value)*100,
+          kind:refChangeEnglishName(),
+          happen_at:new Date(),
+          tag_ids:[itemSelected.value.id],
+          name:itemSelected.value.name,
+          sign:itemSelected.value.sign,
+        }
+        console.log(x)
+        http.post('/items', x)
+        http.get('items')
       }
     },
     ]
