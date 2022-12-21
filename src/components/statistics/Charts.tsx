@@ -1,14 +1,12 @@
-import { defineComponent, onMounted, PropType, reactive, ref } from "vue";
-import { ItemData } from "../Item/ItemData";
+import { defineComponent, PropType, ref } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Form } from "../../shared/Form";
 import { Icon } from "../../shared/Icon";
 import { Overlay } from "../../shared/Overlay";
 import { Tab, Tabs } from "../../shared/Tabs";
-import { time, Time } from "../../shared/time";
+import { time } from "../../shared/time";
 import { TimeSelected } from "../../shared/TimeSelected";
 import s from './Charts.module.scss';
-import * as echarts from 'echarts';
 import { Histogram } from "./histogram";
 import { PieChart } from "./PieChart";
 import { Bars } from "./Bars";

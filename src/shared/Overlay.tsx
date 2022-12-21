@@ -1,7 +1,7 @@
-import { defineComponent, onBeforeMount, PropType, ref } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import { RouterLink, useRouter } from "vue-router";
 import { Dialog } from 'vant'
-import {Icon} from './Icon';
+import { Icon } from './Icon';
 import { mePromise, refreshMe } from "./me";
 import s from './Overlay.module.scss';
 export const Overlay = defineComponent({

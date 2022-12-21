@@ -17,7 +17,7 @@ import { TagCreate } from "../components/Tags/TagCreate";
 import { TagEdit } from "../components/Tags/TagEdit";
 import { SignIn } from "../views/SignIn";
 import { StatisticsPage } from "../components/statistics/Charts";
-import { http } from "../shared/Http";
+import { Notify } from "../shared/Notify";
 //如果没反应的话先看看父路由有没有写<RouterView/>
 
 export const routes: RouteRecordRaw[] = [
@@ -67,4 +67,7 @@ export const routes: RouteRecordRaw[] = [
       {path:':id/edit',component:TagEdit},
     ]
   },
+  { path:'/notify', component:Notify},
+  { path:'/export', component:Notify}
+
 ]

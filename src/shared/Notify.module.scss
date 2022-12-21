@@ -1,0 +1,15 @@
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 92px);
+    width: 100vw;
+    .nodata{
+        font-size: 25px;
+        color: gray;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin-top: 5vh;
+        margin-bottom: 20vh;
+    }
+}
