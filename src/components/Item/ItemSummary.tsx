@@ -40,7 +40,7 @@ export const ItemSummary = defineComponent({
           <div class={s.wrapper} onClick={() => { console.log(props.startDate, props.endDate) }}>
             <div class={s.emoji}>{item.tags[0].sign}</div>
             <span class={s.id}>
-              {item.id}
+              {item.tags[0].name}
             </span>
             <span class={s.time}>{time}</span>
             <span class={[s.money,[item.kind==='expenses'?'':s.IncomeMoney]]}>￥ {item.amount/100}</span>
