@@ -51,6 +51,7 @@ export const InputPad = defineComponent({
       {text:'0',onclick:()=>{appendText(0)}},
       {text:'清空',onclick:()=>{refAmount.value = '0'}},
       {text:'提交',onclick:()=>{
+        
         if( !itemSelected.value.name ){
           Toast('请填入账目标签')
         }
@@ -63,7 +64,10 @@ export const InputPad = defineComponent({
           sign:itemSelected.value.sign,
         }
         console.log(x)
-        http.post('/items', x)
+        http.post('/items', x).catch(
+          ()=>{Toast.fail('提交失败,金额不能为零或网络异常');}
+        )
+        refAmount.value = '0'; // 按提交清空输入金额
       }
     },
     ]

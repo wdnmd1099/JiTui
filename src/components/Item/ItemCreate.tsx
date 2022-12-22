@@ -5,6 +5,7 @@ import { MainLayout } from "../../layouts/MainLayout";
 import { Button } from "../../shared/Button";
 import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
+import { LoadMoreButton } from "../../shared/LoadMoreButton";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { refLoadMoreMessage, onLoadMore } from "../../shared/TagsLoadMore";
 import { InputPad } from "./InputPad";
@@ -95,11 +96,13 @@ export const ItemCreate = defineComponent({
                       </div>
                     </div>
                   )}
-                  <div class={s.loadMoreTagsWrapper}>
+                   <LoadMoreButton yesOrNo={refLoadMoreMessage.value[0].yesOrNo}
+                    onClick={onLoadMore}/>
+                  {/* <div class={s.loadMoreTagsWrapper}>
                     {refLoadMoreMessage.value[0].yesOrNo === true ?
                       <Button onClick={onLoadMore} class={s.loadMoreTags}>点击加载更多</Button> :
                       <div class={s.noMoreTags}>没有更多</div>}
-                  </div>
+                  </div> */}
                 </Tab>
                 <Tab name="收入" class={s.tags_wrapper}>
                   <div class={s.tag}>
@@ -126,11 +129,8 @@ export const ItemCreate = defineComponent({
                       </div>
                     </div>
                   )}
-                  <div class={s.loadMoreTagsWrapper}>
-                    {refLoadMoreMessage.value[1].yesOrNo === true ?
-                      <Button onClick={onLoadMore} class={s.loadMoreTags}>点击加载更多</Button> :
-                      <div class={s.noMoreTags}>没有更多</div>}
-                  </div>
+                  <LoadMoreButton yesOrNo={refLoadMoreMessage.value[1].yesOrNo}
+                    onClick={onLoadMore}/>
                 </Tab>
               </Tabs>
 

@@ -5,6 +5,7 @@ import { http } from "./Http"
 export const refLoadMoreMessage = ref<any>([   //加载更多表驱动
     { name: '支出', yesOrNo: true, page: 1 },
     { name: '收入', yesOrNo: true, page: 1 },
+    
 ])
 
 const ButtonOnLoad = (refValue: number, response: any) => {
@@ -17,7 +18,7 @@ const ButtonOnLoad = (refValue: number, response: any) => {
                 item.yesOrNo = false
             }
         })
-    }
+    } 
 }
 
 

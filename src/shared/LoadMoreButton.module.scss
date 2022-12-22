@@ -1,0 +1,15 @@
+.wrapper{
+        width: 100%;
+    .loadMoreTagsWrapper{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 15px;
+        .loadMoreTags{
+        }
+        .noMoreTags{
+          color: gray;
+        }
+      }
+}

@@ -20,15 +20,15 @@ export const ItemSummary = defineComponent({
         <div class={s.total}>
           <li class={s.income}>
             <span>收入</span>
-            <span>￥ {refExpensesMoney.value}</span>
+            <span>￥ {refIncomeMoney.value.toFixed(2)}</span>
           </li>
           <li class={s.expenditure}>
             <span>支出</span>
-            <span>￥ {refIncomeMoney.value}</span>
+            <span>￥ {refExpensesMoney.value.toFixed(2)}</span>
           </li>
           <li class={s.netIncome}>
             <span>净收入</span>
-            <span>￥ {refIncomeMoney.value - refExpensesMoney.value}</span>
+            <span>￥ {(refIncomeMoney.value - refExpensesMoney.value).toFixed(2)}</span>
           </li>
         </div>
         {props.refData?.map((item: {
@@ -36,6 +36,7 @@ export const ItemSummary = defineComponent({
         }) =>{ 
           const time = item.created_at.match(/^.{10}/gm)[0]
            + " "+ item.created_at.match(/.{2}:.{2}:.{2}/gm)[0];
+          //  console.log(item)
         return(
           <div class={s.wrapper} onClick={() => { console.log(props.startDate, props.endDate) }}>
             <div class={s.emoji}>{item.tags[0].sign}</div>
