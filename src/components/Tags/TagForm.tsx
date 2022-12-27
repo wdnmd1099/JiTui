@@ -1,10 +1,11 @@
+import { Toast } from "vant";
 import { defineComponent, PropType, reactive} from "vue";
 import { useRouter } from "vue-router";
 import { Button } from "../../shared/Button";
 import { EmojiSelect } from "../../shared/EmojiSelect";
 import { http } from "../../shared/Http";
 import { Rules, validate } from "../../shared/validate";
-import { refKind } from "../Item/ItemCreate";
+import { refKind, refTagData } from "../Item/ItemCreate";
 import s from './Tag.module.scss';
 export const refChangeEnglishName = ()=>{ 
   if(refKind.value === '支出'){
@@ -18,10 +19,11 @@ export const TagForm = defineComponent({
     const router = useRouter()
     
     const formData = reactive({
-        name: '',
-        sign: '',
+        name: refTagData.tagName,
+        sign: refTagData.tagSign,
         kind:refChangeEnglishName(),
       })
+
       const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
       const onSubmit = async (e: Event) => {
         e.preventDefault()
@@ -44,13 +46,24 @@ export const TagForm = defineComponent({
         }
         
       }
+
+      const onClick = ()=>{
+        console.log(1)
+        http.patch(`tags/${refTagData.tagId}`,formData)
+          .catch((e)=>{Toast('请求服务器错误')})
+        router.push('/items/create')
+      }
+
+
+
     return ()=>(
         <form class={s.form} onSubmit={onSubmit}>
             <div class={s.formRow}>
               <label class={s.formLabel}>
                 <span class={s.formItem_name}>标签名</span>
                 <div class={s.formItem_value}>
-                  <input v-model={formData.name} class={[s.formItem, s.input,
+                  <input v-model={formData.name}
+                   class={[s.formItem, s.input,
                     [formData.name === '' ? s.error : ''],
                     [formData.name.length > 4 ? s.error : '']]}></input>
                 </div>
@@ -79,7 +92,7 @@ export const TagForm = defineComponent({
             <p class={s.tips}>记账时长按标签即可进行编辑</p>
             <div class={s.formRow}>
               <div class={s.formItem_value}>
-                <Button type="submit" class={[s.formItem, s.button]}>确定</Button>
+                <Button class={[s.formItem, s.button]} onClick={onClick}>确定</Button>
               </div>
             </div>
           </form>

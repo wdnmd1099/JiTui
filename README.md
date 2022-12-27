@@ -62,26 +62,3 @@ TagCreate 输入表情和标题的组件
 Tabs 和 Tab  导航栏，比如支出和收入的导航栏切换，
 它接受一个name当导航栏的文字，通过ref传不同的name来切换导航，v-model ref双向绑定，ItemCreate有使用示例
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### 一些入门说明
-
-JSX 是一种 JavaScript 的语法扩展，即 JSX = JavaScript + XML，即在 JavaScript 里面写 XML(不懂XML的，可以暂时把它当成HTML理解)，简单来说，就是利用XML语法来创建虚拟DOM，当遇到<>，JSX就当XML解析，遇到{}就当JavaScript解析，因为 JSX 的这个特性，所以它具备了 JavaScript 的灵活性，同时又具备了 XML的语义化和直观性。
-https://blog.csdn.net/weixin_45727472/article/details/112253674
-
-
-
-tsx可定义模板代码 ts就不含模板代码
-

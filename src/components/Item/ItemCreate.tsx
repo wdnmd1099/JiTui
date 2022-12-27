@@ -1,5 +1,5 @@
 import { number } from "echarts";
-import { defineComponent, onBeforeMount, PropType, ref } from "vue";
+import { defineComponent, onBeforeMount, PropType, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Button } from "../../shared/Button";
@@ -16,8 +16,8 @@ import s from './ItemCreate.module.scss';
 export const refKind = ref('支出') // 现在所在的页面
 export const refExpensesTags = ref<any>() // 支出标签
 export const refIncomeTags = ref() //收入标签
-export const itemSelected = ref({name:'',sign:'',id:1,amount:1.1}) //当前选中的标签 , id是每个表情都有的随机数字
-
+export const itemSelected = ref({ name: '', sign: '', id: 1, amount: 1.1 }) //当前选中的标签 , id是每个表情都有的随机数字
+export let refTagData = reactive({tagName:'',tagSign:'',tagId:0})
 export const ItemCreate = defineComponent({
   props: {
     name: {
@@ -27,7 +27,7 @@ export const ItemCreate = defineComponent({
   setup(props, context) {
     const router = useRouter()
     const createTag = '/tags/create'
-    
+
 
     onBeforeMount(async () => {
       const response: any = await http.get('/tags', {
@@ -41,12 +41,25 @@ export const ItemCreate = defineComponent({
       refExpensesTags.value = response.data.resources
       refIncomeTags.value = response1.data.resources
 
-      if(response.data.pager.count < 25){ // 一进来请求就看标签是否满足25个，不满足25个直接显示没有更多
+      if (response.data.pager.count < 25) { // 一进来请求就看标签是否满足25个，不满足25个直接显示没有更多
         refLoadMoreMessage.value[0].yesOrNo = false
-      }else if(response1.data.pager.count < 25){
+      } else if (response1.data.pager.count < 25) {
         refLoadMoreMessage.value[1].yesOrNo = false
       }
     })
+
+    let timer:undefined | number = undefined
+    let screenX = 0
+    let screenY = 0
+    const onTouchend = (e:TouchEvent)=>{
+      clearTimeout(timer)
+    }
+    const onTouchmove = (e:TouchEvent)=>{
+      if(e.touches[0].screenX - screenX > 20 || e.touches[0].screenX - screenX<20
+        || e.touches[0].screenY - screenY > 20 || e.touches[0].screenY - screenY < 20){
+        clearTimeout(timer)
+      }
+    }
 
     return () => (
       <MainLayout>{
@@ -76,19 +89,31 @@ export const ItemCreate = defineComponent({
                     <div class={s.sign}>
                       <Icon name="add" class={s.createTag} />
                     </div>
-                    <div class={s.name} onClick={()=>{router.push(createTag)}}>
+                    <div class={s.name} onClick={() => { router.push(createTag) }}>
                       新增
                     </div>
                   </div>
-                  {refExpensesTags.value?.map((tag: { sign: any; name: any; id:any}) =>
-                    <div class={[s.tag, [itemSelected.value.id === tag.id ? s.selected : '']]} 
-                    onClick={()=>{
-                      itemSelected.value.name = tag.name;
-                      itemSelected.value.sign = tag.sign;
-                      itemSelected.value.id = tag.id;
-                      console.log(itemSelected.value)
+                  {refExpensesTags.value?.map((tag: { sign: any; name: any; id: any }) =>
+                    <div class={[s.tag, [itemSelected.value.id === tag.id ? s.selected : '']]}
+                      onClick={() => {
+                        itemSelected.value.name = tag.name;
+                        itemSelected.value.sign = tag.sign;
+                        itemSelected.value.id = tag.id;
+                        console.log(itemSelected.value)
                       }}>
-                      <div class={s.sign}>
+                      <div class={s.sign}
+                      onTouchstart = { (e:TouchEvent)=>{
+                        screenX = e.touches[0].screenX
+                        screenY = e.touches[0].screenY
+                        timer = setTimeout(() => {
+                         refTagData.tagName = tag.name
+                         refTagData.tagSign = tag.sign
+                         refTagData.tagId = tag.id
+                         router.push('/tags/1/edit')
+                        }, 700);
+                      } }
+                      onTouchend  =  { onTouchend }
+                      onTouchmove =  { onTouchmove}>
                         {tag.sign}
                       </div>
                       <div class={s.name}>
@@ -96,8 +121,8 @@ export const ItemCreate = defineComponent({
                       </div>
                     </div>
                   )}
-                   <LoadMoreButton yesOrNo={refLoadMoreMessage.value[0].yesOrNo}
-                    onClick={onLoadMore}/>
+                  <LoadMoreButton yesOrNo={refLoadMoreMessage.value[0].yesOrNo}
+                    onClick={onLoadMore} />
                   {/* <div class={s.loadMoreTagsWrapper}>
                     {refLoadMoreMessage.value[0].yesOrNo === true ?
                       <Button onClick={onLoadMore} class={s.loadMoreTags}>点击加载更多</Button> :
@@ -109,19 +134,31 @@ export const ItemCreate = defineComponent({
                     <div class={s.sign}>
                       <Icon name="add" class={s.createTag} />
                     </div>
-                    <div class={s.name} onClick={()=>{router.push(createTag)}}>
+                    <div class={s.name} onClick={() => { router.push(createTag) }}>
                       新增
                     </div>
                   </div>
-                  {refIncomeTags.value.map((tag: { sign: any; name: any; id:any}) =>
-                    <div class={[s.tag, [itemSelected.value.id === tag.id ? s.selected : '']]} 
-                    onClick={()=>{
-                      itemSelected.value.name = tag.name;
-                      itemSelected.value.sign = tag.sign;
-                      itemSelected.value.id = tag.id;
-                      console.log(itemSelected.value)
+                  {refIncomeTags.value.map((tag: { sign: any; name: any; id: any }) =>
+                    <div class={[s.tag, [itemSelected.value.id === tag.id ? s.selected : '']]}
+                      onClick={() => {
+                        itemSelected.value.name = tag.name;
+                        itemSelected.value.sign = tag.sign;
+                        itemSelected.value.id = tag.id;
+                        console.log(itemSelected.value)
                       }}>
-                      <div class={s.sign}>
+                      <div class={s.sign}
+                      onTouchstart = { (e:TouchEvent)=>{
+                        screenX = e.touches[0].screenX
+                        screenY = e.touches[0].screenY
+                        timer = setTimeout(() => {
+                         refTagData.tagName = tag.name
+                         refTagData.tagSign = tag.sign
+                         refTagData.tagId = tag.id
+                         router.push('/tags/1/edit')
+                        }, 700);
+                      } }
+                      onTouchend  =  { onTouchend }
+                      onTouchmove =  { onTouchmove}>
                         {tag.sign}
                       </div>
                       <div class={s.name}>
@@ -130,7 +167,7 @@ export const ItemCreate = defineComponent({
                     </div>
                   )}
                   <LoadMoreButton yesOrNo={refLoadMoreMessage.value[1].yesOrNo}
-                    onClick={onLoadMore}/>
+                    onClick={onLoadMore} />
                 </Tab>
               </Tabs>
 
