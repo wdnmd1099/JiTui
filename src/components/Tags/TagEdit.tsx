@@ -5,9 +5,25 @@ import { Icon } from '../../shared/Icon';
 import { TagForm } from './TagForm';
 import s from './Tag.module.scss';
 import { useRouter } from 'vue-router';
+import { http } from '../../shared/Http';
+import { refTagData } from '../Item/ItemCreate';
+import { Dialog, Toast } from 'vant';
 export const TagEdit = defineComponent({
   setup: (props, context) => {
     const router = useRouter()
+    const onClick = ()=>{
+      Dialog.confirm({
+        title: '提示',
+        message:
+          '删除标签的同时会删除对应的账单',
+      })
+        .then(() => {
+          http.delete(`tags/${refTagData.tagId}`)
+          .catch(()=>{Toast('网络请求失败')})
+          router.push('/items/create')
+        })
+        .catch(() => {});
+    }
     return () => (
       <>
         <div>
@@ -17,8 +33,7 @@ export const TagEdit = defineComponent({
             default:()=> (<>
              <TagForm />
              <div class={s.actions}>
-              <Button level='danger' class={[s.removeTags]} onClick={()=>{}}>删除标签</Button>
-              <Button level='danger' class={s.removeTagsAndItems} onClick={()=>{}}>删除标签和记账</Button>
+              <Button level='danger' class={[s.removeTags]} onClick={onClick}>删除标签</Button>
              </div>
             </>
             )

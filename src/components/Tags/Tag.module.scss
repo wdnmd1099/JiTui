@@ -52,8 +52,8 @@
     padding: 0 16px 16px ;
     display: flex;
     justify-content: space-between;
-    .removeTagsAndItems,.removeTags{
-        width: calc(50% - 8px);
+    .removeTags{
+        width: 100%;
         font-size: 15px;
       }
   }
