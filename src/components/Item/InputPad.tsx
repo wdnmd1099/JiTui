@@ -83,7 +83,7 @@ export const InputPad = defineComponent({
              <Icon name='date' class={s.icon}/>
              
              <span  class='xxxx' onClick={showDatePicker}>{new Time(refDate.value).format()}</span>
-             <Popup position='bottom' v-model:show={refDatePickerVisible.value} >
+             {/* <Popup position='bottom' v-model:show={refDatePickerVisible.value} >
               <DatetimePicker value={refDate.value} type="date" title="选择年月日"
                 onConfirm={setDate} onCancel={hideDatePicker} 
                 minDate={new Date(2022, 10, 11)}
@@ -91,7 +91,7 @@ export const InputPad = defineComponent({
                 //onConfirm 这个API 会返回当前选中的时间，然后赋值给refDate 然后refDate传给time 就可以显示出来了
                 //https://vant-ui.github.io/vant/#/zh-CN/datetime-picker#dai-ma-yan-shi
               />
-            </Popup>
+            </Popup> */}
           </span>
           <span class={s.amount}>{refAmount.value}</span>
         </div>

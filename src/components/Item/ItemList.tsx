@@ -1,4 +1,4 @@
-import { defineComponent, onBeforeMount, PropType, ref } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Icon } from "../../shared/Icon";
 import { Overlay } from "../../shared/Overlay";
@@ -7,8 +7,7 @@ import { TimeSelected } from "../../shared/TimeSelected";
 import { time } from "../../shared/time";
 import s from './ItemList.module.scss';
 import { ItemSummary } from "./ItemSummary";
-import { http } from "../../shared/Http";
-import { LoadMoreButton } from "../../shared/LoadMoreButton";
+import { AddButton } from "../../shared/AddButton";
 
 export let refExpensesMoney = ref(0);
 export let refIncomeMoney = ref(0);
@@ -55,6 +54,8 @@ export const ItemList = defineComponent({
 
               {overlayVisible.value &&
                 <Overlay onClose={() => overlayVisible.value = false} />}
+
+              <AddButton></AddButton>
             </>
           )
         }

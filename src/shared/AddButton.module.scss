@@ -1,0 +1,16 @@
+.wrapper{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .icon{
+        position: fixed;
+        bottom:3vh;
+        right: 6vw;
+        z-index: 100;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+        background: rgb(64,133,98,0.8);
+    }
+}
