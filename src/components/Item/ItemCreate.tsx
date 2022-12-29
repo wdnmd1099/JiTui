@@ -14,8 +14,8 @@ import s from './ItemCreate.module.scss';
 
 
 export const refKind = ref('支出') // 现在所在的页面
-export const refExpensesTags = ref<any>() // 支出标签
-export const refIncomeTags = ref() //收入标签
+export const refExpensesTags = ref<any>([]) // 支出标签
+export const refIncomeTags = ref([]) //收入标签
 export const itemSelected = ref({ name: '', sign: '', id: 1, amount: 1.1 }) //当前选中的标签 , id是每个表情都有的随机数字
 export let refTagData = reactive({tagName:'',tagSign:'',tagId:0})
 export const ItemCreate = defineComponent({
