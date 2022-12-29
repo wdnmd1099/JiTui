@@ -10,18 +10,18 @@ export const Tabs = defineComponent({
     emits:['update:selected'],
     setup(props, context) {
         return () => {
-            const array = context.slots?.default?.()
+            const tabsArray = context.slots?.default?.()
             // console.log(array)
             //array 是数组，数组里面是 Tab 组件的内容
-            if (!array) return () => null
-            for (let i = 0; i < array?.length; i++) {
-                if (array[i].type !== Tab) { //遍历Tabs 的内容，如果有不是Tab 组件的内容，就抛出错误
+            if (!tabsArray) return () => null
+            for (let i = 0; i < tabsArray?.length; i++) {
+                if (tabsArray[i].type !== Tab) { //遍历Tabs 的内容，如果有不是Tab 组件的内容，就抛出错误
                     throw new Error('<Tabs> only accepts <Tabs> as children')
                 }
             }
             return <div class={s.tabs}>
                 <ol class={s.tabs_nav}>
-                    {array.map(item =>
+                    {tabsArray.map(item =>
                         <li class={item.props?.name === props.selected ? s.selected : ''}
                         onClick={()=> {context.emit('update:selected',item.props?.name)}
                     }
@@ -32,7 +32,11 @@ export const Tabs = defineComponent({
                         </li>)}
                 </ol>
                 <div>
-                    {array.find(item => item.props?.name === props.selected)}
+                    {tabsArray.map( item => 
+                        (<div v-show = {item.props?.name === props.selected}>{item}</div>)
+                    )}
+                    {/* 一开始写成下面这句，导致初始化的时候只跑了一次，不能使所有的tab组件都跑一次，导致bug */}
+                    {/* {tabsArray.find(item => item.props?.name === props.selected)} */}
                     {/* 找到当前选中的Tab组件，把它的context.slots?.default渲染到页面,不理解的话打开下面的关闭上面的就知道了 */}
                     {/* {<Tab name="支出"><div>xxxxxx</div></Tab>} */}
                 </div>
