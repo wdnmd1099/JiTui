@@ -1,7 +1,8 @@
-import { Popup, DatetimePicker } from "vant";
+import { Popup, DatetimePicker, Toast } from "vant";
 import { defineComponent, PropType, reactive, ref } from "vue";
 import s from './TimeSelected.module.scss';
 import { Time } from "./time";
+import { diyEndDate, diyStartDate, refSelected } from "../components/Item/ItemList";
 export const TimeSelected = defineComponent({
     props: {
         name: {
@@ -22,6 +23,7 @@ export const TimeSelected = defineComponent({
         const setStart = (date: Date) => { refDate.start = date; hideStartDatePicker(); }
         const setEnd = (date: Date) => { refDate.end = date; hideEndDatePicker(); }
         return () => (<>
+        {refSelected.value === '自定义时间' ? '': refCancel.value = false}
             <div class={[s.clickShow]} onClick={() => {
                 refCancel.value = false
             }}>
@@ -43,7 +45,7 @@ export const TimeSelected = defineComponent({
                             <Popup position='bottom' v-model:show={refDate.startBoolean} >
                                 <DatetimePicker value={refDate.start} type="date" title="选择年月日"
                                     onConfirm={setStart} onCancel={hideStartDatePicker}
-                                    minDate={new Date(2022, 10, 11)}
+                                    minDate={new Date(2022, 10, 1)}
                                     maxDate={new Date(2025, 0, 1)}
                                 />
                             </Popup>
@@ -72,25 +74,22 @@ export const TimeSelected = defineComponent({
                                 onClick={() => {
                                     refCancel.value = true
                                     const StartYear =  Number(new Date(refDate.start).getFullYear())
-                                    const StartMonth = Number(new Date(refDate.start).getMonth())
+                                    const StartMonth = Number(new Date(refDate.start).getMonth() + 1)
                                     const StartDay = Number(new Date(refDate.start).getDate())
                                     const EndYear = Number(new Date(refDate.end).getFullYear())
-                                    const EndMonth = Number(new Date(refDate.end).getMonth())
+                                    const EndMonth = Number(new Date(refDate.end).getMonth() + 1)
                                     const EndDay = Number(new Date(refDate.end).getDate())
-                                    console.log(StartYear, EndYear, StartMonth, EndMonth, StartDay, EndDay)
                                     if (StartYear > EndYear) {
-                                        console.log('cao')
-                                        alert('cao')
+                                        Toast('时间选择错误')
                                     } else if (StartYear === EndYear && StartMonth > EndMonth) {
-                                        console.log('cao')
-                                        alert('cao')
+                                        Toast('时间选择错误')
                                     } else if (StartYear === EndYear && StartMonth === EndMonth) {
                                         if (StartDay > EndDay) {
-                                            console.log('cao')
-                                            alert('cao')
+                                          Toast('时间选择错误')
                                         }
                                     }
-                                    console.log(233)
+                                    diyStartDate.value = `${StartYear}-${StartMonth}-${StartDay}`
+                                    diyEndDate.value = `${EndYear}-${EndMonth}-${EndDay}`
                                 }}>确定</button>
                         </div>
                     </div>
