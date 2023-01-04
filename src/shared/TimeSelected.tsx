@@ -1,15 +1,18 @@
 import { Popup, DatetimePicker, Toast } from "vant";
-import { defineComponent, PropType, reactive, ref } from "vue";
+import { defineComponent, PropType, reactive, ref, watch } from "vue";
 import s from './TimeSelected.module.scss';
 import { Time } from "./time";
-import { diyEndDate, diyStartDate, refSelected } from "../components/Item/ItemList";
+
+export let diyStartDate = ref('')
+export let diyEndDate = ref('')
 export const TimeSelected = defineComponent({
     props: {
-        name: {
-            type: String as PropType<string>
-        },
         refOn: {
             type: Boolean as PropType<boolean>
+        },
+        refSelected: {
+            type: String as PropType<string>,
+            required: true,
         }
     },
     emits: ['update:refOn'],
@@ -22,8 +25,12 @@ export const TimeSelected = defineComponent({
         const hideEndDatePicker = () => { refDate.endBoolean = false }
         const setStart = (date: Date) => { refDate.start = date; hideStartDatePicker(); }
         const setEnd = (date: Date) => { refDate.end = date; hideEndDatePicker(); }
+
+        watch(() => [props.refSelected], () => {
+            props.refSelected === '自定义时间' ? '' : refCancel.value = false
+        })
+
         return () => (<>
-        {refSelected.value === '自定义时间' ? '': refCancel.value = false}
             <div class={[s.clickShow]} onClick={() => {
                 refCancel.value = false
             }}>
@@ -67,13 +74,14 @@ export const TimeSelected = defineComponent({
                         <div class={s.yesOrNo}>
                             <button class={[s.cancel]}
                                 onClick={() => {
+                                    // console.log(refCancel.value)
                                     refCancel.value = true
                                 }}
                             >取消</button>
                             <button class={s.confirm}
                                 onClick={() => {
                                     refCancel.value = true
-                                    const StartYear =  Number(new Date(refDate.start).getFullYear())
+                                    const StartYear = Number(new Date(refDate.start).getFullYear())
                                     const StartMonth = Number(new Date(refDate.start).getMonth() + 1)
                                     const StartDay = Number(new Date(refDate.start).getDate())
                                     const EndYear = Number(new Date(refDate.end).getFullYear())
@@ -85,11 +93,12 @@ export const TimeSelected = defineComponent({
                                         Toast('时间选择错误')
                                     } else if (StartYear === EndYear && StartMonth === EndMonth) {
                                         if (StartDay > EndDay) {
-                                          Toast('时间选择错误')
+                                            Toast('时间选择错误')
                                         }
                                     }
                                     diyStartDate.value = `${StartYear}-${StartMonth}-${StartDay}`
                                     diyEndDate.value = `${EndYear}-${EndMonth}-${EndDay}`
+                                    console.log(diyStartDate.value,diyEndDate.value)
                                 }}>确定</button>
                         </div>
                     </div>

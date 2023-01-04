@@ -3,17 +3,13 @@ import { MainLayout } from "../../layouts/MainLayout";
 import { Icon } from "../../shared/Icon";
 import { Overlay } from "../../shared/Overlay";
 import { Tab, Tabs } from "../../shared/Tabs";
-import { TimeSelected } from "../../shared/TimeSelected";
+import { diyEndDate, diyStartDate, TimeSelected } from "../../shared/TimeSelected";
 import { time } from "../../shared/time";
 import s from './ItemList.module.scss';
 import { ItemSummary } from "./ItemSummary";
 import { AddButton } from "../../shared/AddButton";
 
-export let refExpensesMoney = ref(0);
-export let refIncomeMoney = ref(0);
-export let diyStartDate = ref('')
-export let diyEndDate = ref('')
-export const refSelected = ref('本月')
+
 export const ItemList = defineComponent({
   props: {
     name: {
@@ -21,7 +17,7 @@ export const ItemList = defineComponent({
     }
   },
   setup(props, context) {
-    
+    const refSelected = ref('本月')
     const overlayVisible = ref(false)
     const onClickMenu = () => {
       overlayVisible.value = !overlayVisible.value;
@@ -48,7 +44,7 @@ export const ItemList = defineComponent({
 
                 <Tab name='自定义时间'>
                   <ItemSummary startDate={diyStartDate.value} endDate={diyEndDate.value} />
-                  <TimeSelected/>
+                  <TimeSelected refSelected={refSelected.value}/>
                 </Tab>
               </Tabs>
 

@@ -39,41 +39,47 @@ export const StatisticsPage = defineComponent({
                     { value: '2', text: '收入' },
                   ]}>
                   </Form>
+                  <div>1</div>
                   <Histogram />
                   <PieChart />
                   <Bars/>
                 </Tab>
 
                 <Tab name='上月'>
-                  <Form v-model={refSelect.value} label='类型' type="select" options={[
+                  {/* <Form v-model={refSelect.value} label='类型' type="select" options={[
                     { value: '1', text: '支出' },
                     { value: '2', text: '收入' },
                   ]}>
                   </Form>
+                  
                   <Histogram />
-                  <PieChart />
+                  <PieChart /> */}
+                  <div>2</div>
                 </Tab>
 
                 <Tab name='今年'>
-                  <Form v-model={refSelect.value} label='类型' type="select" options={[
+                  {/* <Form v-model={refSelect.value} label='类型' type="select" options={[
                     { value: '1', text: '支出' },
                     { value: '2', text: '收入' },
                   ]}>
                   </Form>
+                 
                   <Histogram />
-                  <PieChart />
+                  <PieChart /> */}
+                   <div>3</div>
                 </Tab>
 
                 <Tab name='自定义时间'>
 
-                  <Form v-model={refSelect.value} label='类型' type="select" options={[
+                  {/* <Form v-model={refSelect.value} label='类型' type="select" options={[
                     { value: '1', text: '支出' },
                     { value: '2', text: '收入' },
                   ]}>
                   </Form>
+                  <div>4</div>
                   <Histogram />
-                  <PieChart />
-                  <TimeSelected />
+                  <PieChart /> */}
+                  <TimeSelected refSelected={refSelected.value} />
                 </Tab>
               </Tabs>
 

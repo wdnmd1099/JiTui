@@ -1,6 +1,5 @@
 import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import { http } from "../../shared/Http";
-import { refExpensesMoney, refIncomeMoney } from "./ItemList";
 import s from './ItemSummary.module.scss';
 export const ItemSummary = defineComponent({
   props: {
@@ -39,7 +38,6 @@ export const ItemSummary = defineComponent({
     watch(()=>[props.startDate,props.endDate],()=>{
       page.value = 0
       items.value = []
-      console.log(props.startDate,props.endDate)
       fetchItems()
     })
 
