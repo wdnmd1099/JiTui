@@ -37,7 +37,7 @@ export const Tabs = defineComponent({
                 </ol>
                 <div>
                     {/*false是不需要它重新渲染，只需要全部渲染一次就可以了
-                    ，charts插件一开始不能获取display：none的宽高，不能渲染，所以加了个rerenderOnSelected选项，true就强制重新渲染*/}
+                    ，echarts插件一开始不能获取display：none的宽高，不能渲染，所以加了个rerenderOnSelected选项，true就强制重新渲染*/}
                     {props.rerenderOnSelected === false ? 
                         tabsArray.map(item =>   
                             (<div v-show={item.props?.name === props.selected}>{item}</div>) 

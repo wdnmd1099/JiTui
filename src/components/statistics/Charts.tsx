@@ -7,7 +7,7 @@ import { Tab, Tabs } from "../../shared/Tabs";
 import { time } from "../../shared/time";
 import { TimeSelected } from "../../shared/TimeSelected";
 import s from './Charts.module.scss';
-import { Histogram } from "./histogram";
+import { LineChart } from "./LineChart";
 import { PieChart } from "./PieChart";
 import { Bars } from "./Bars";
 export const StatisticsPage = defineComponent({
@@ -39,7 +39,7 @@ export const StatisticsPage = defineComponent({
                     { value: '2', text: '收入' },
                   ]}>
                   </Form>
-                  <Histogram />
+                  <LineChart />
                   <PieChart />
                   <Bars/>
                 </Tab>
@@ -50,7 +50,7 @@ export const StatisticsPage = defineComponent({
                     { value: '2', text: '收入' },
                   ]}>
                   </Form>
-                  <Histogram />
+                  <LineChart />
                   <PieChart />
                   <Bars/>
                 </Tab>
@@ -61,7 +61,7 @@ export const StatisticsPage = defineComponent({
                     { value: '2', text: '收入' },
                   ]}>
                   </Form>
-                  <Histogram />
+                  <LineChart />
                   <PieChart />
                   <Bars/>
                 </Tab>
@@ -73,7 +73,7 @@ export const StatisticsPage = defineComponent({
                     { value: '2', text: '收入' },
                   ]}>
                   </Form>
-                  <Histogram />
+                  <LineChart />
                   <PieChart />
                   <Bars/>
                   <TimeSelected refSelected={refSelected.value} />
