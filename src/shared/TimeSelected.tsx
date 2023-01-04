@@ -10,7 +10,7 @@ export const TimeSelected = defineComponent({
         refOn: {
             type: Boolean as PropType<boolean>
         },
-        refSelected: {
+        refSelected: {  // 必传一个当前选中的导航栏的name，如果是"自定义时间"，就触发watch
             type: String as PropType<string>,
             required: true,
         }
@@ -26,7 +26,7 @@ export const TimeSelected = defineComponent({
         const setStart = (date: Date) => { refDate.start = date; hideStartDatePicker(); }
         const setEnd = (date: Date) => { refDate.end = date; hideEndDatePicker(); }
 
-        watch(() => [props.refSelected], () => {
+        watch(() => [props.refSelected], () => { //解决离开自定义时间后再点击自定义时间而不显示选择时间的选择框
             props.refSelected === '自定义时间' ? '' : refCancel.value = false
         })
 
