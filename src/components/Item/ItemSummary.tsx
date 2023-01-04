@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, PropType, ref, watch } from "vue";
+import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import { http } from "../../shared/Http";
 import { refExpensesMoney, refIncomeMoney } from "./ItemList";
 import s from './ItemSummary.module.scss';
@@ -20,7 +20,7 @@ export const ItemSummary = defineComponent({
 
     const fetchItems: any = async () => {
       if (!props.startDate || !props.endDate) { return }
-      for (let i = 1; i < 6; i++) {
+      for (let i = 1; i < 999; i++) {
         const response: any = await http.get('/items', {
           happen_after: props.startDate,
           happen_before: props.endDate,
@@ -41,9 +41,32 @@ export const ItemSummary = defineComponent({
       items.value = []
       console.log(props.startDate,props.endDate)
       fetchItems()
-
     })
 
+
+
+
+
+    const itemsBalance = reactive({
+      expenses: 0, income: 0, balance: 0
+    })
+    const fetchItemsBalance =async ()=>{
+      if(!props.startDate || !props.endDate){ return }
+      const response = await http.get('/items/balance', {
+        happen_after: props.startDate,
+        happen_before: props.endDate,
+        page: page.value + 1,
+      })
+      Object.assign(itemsBalance, response.data)
+    }
+    onMounted(fetchItemsBalance)
+
+    watch(()=>[props.startDate,props.endDate], ()=>{
+      Object.assign(itemsBalance, {
+        expenses: 0, income: 0, balance: 0
+      })
+      fetchItemsBalance()
+    })
 
     return () => (<>
       <div class={s.outsideWrapper}>
@@ -51,15 +74,15 @@ export const ItemSummary = defineComponent({
         <div class={s.total}>
           <li class={s.income}>
             <span>收入</span>
-            <span>￥ {refIncomeMoney.value.toFixed(2)}</span>
+            <span>￥ {(itemsBalance.income/100).toFixed(2)}</span>
           </li>
           <li class={s.expenditure}>
             <span>支出</span>
-            <span>￥ {refExpensesMoney.value.toFixed(2)}</span>
+            <span>￥ {(itemsBalance.expenses/100).toFixed(2)}</span>
           </li>
           <li class={s.netIncome}>
             <span>净收入</span>
-            <span>￥ {(refIncomeMoney.value - refExpensesMoney.value).toFixed(2)}</span>
+            <span>￥ {(itemsBalance.balance/100).toFixed(2)}</span>
           </li>
         </div>
         {items.value?.map((item: {
