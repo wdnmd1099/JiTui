@@ -25,7 +25,6 @@ export const TimeSelected = defineComponent({
         const hideEndDatePicker = () => { refDate.endBoolean = false }
         const setStart = (date: Date) => { refDate.start = date; hideStartDatePicker(); }
         const setEnd = (date: Date) => { refDate.end = date; hideEndDatePicker(); }
-
         watch(() => [props.refSelected], () => { //解决离开自定义时间后再点击自定义时间而不显示选择时间的选择框
             props.refSelected === '自定义时间' ? '' : refCancel.value = false
         })
@@ -106,8 +105,5 @@ export const TimeSelected = defineComponent({
             </div>
         </>
         )
-
-
-
     }
 })

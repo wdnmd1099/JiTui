@@ -1,4 +1,5 @@
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref, watch } from "vue";
+import { refChartChangeType } from "./Form";
 import s from './Tabs.module.scss';
 export const Tabs = defineComponent({
     props: {
@@ -10,9 +11,17 @@ export const Tabs = defineComponent({
             type: Boolean as PropType<boolean>,
             default: false,
         },
+        resetSelectInput: { // 是否重置类型选择框，用来解决选中收入后切到别的tag时显示的是支出实际的图是收入的数据
+            type: Boolean as PropType<boolean>,
+            default: false,
+        }
     },
     emits: ['update:selected'],
     setup(props, context) {
+        props.resetSelectInput === true ?   // 重置类型选择框为'expenses'
+            watch(() => props.selected, () => {
+                refChartChangeType.value ='expenses'
+            }) : ''
         return () => {
             const tabsArray = context.slots?.default?.()
             // console.log(array)
@@ -38,9 +47,9 @@ export const Tabs = defineComponent({
                 <div>
                     {/*false是不需要它重新渲染，只需要全部渲染一次就可以了
                     ，echarts插件一开始不能获取display：none的宽高，不能渲染，所以加了个rerenderOnSelected选项，true就强制重新渲染*/}
-                    {props.rerenderOnSelected === false ? 
-                        tabsArray.map(item =>   
-                            (<div v-show={item.props?.name === props.selected}>{item}</div>) 
+                    {props.rerenderOnSelected === false ?
+                        tabsArray.map(item =>
+                            (<div v-show={item.props?.name === props.selected}>{item}</div>)
                         ) :
                         <div key={props.selected}> {/*key={props.selected} 不会被浏览器缓存导致动画缺失*/}
                             {tabsArray.find(item => item.props?.name === props.selected)}

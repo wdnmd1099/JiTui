@@ -1,11 +1,11 @@
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref, watch } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Form } from "../../shared/Form";
 import { Icon } from "../../shared/Icon";
 import { Overlay } from "../../shared/Overlay";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { time } from "../../shared/time";
-import { TimeSelected } from "../../shared/TimeSelected";
+import { diyEndDate, diyStartDate, TimeSelected } from "../../shared/TimeSelected";
 import s from './Charts.module.scss';
 import { LineChart } from "./LineChart";
 import { PieChart } from "./PieChart";
@@ -25,6 +25,7 @@ export const StatisticsPage = defineComponent({
     }
     const refSelect = ref('1')
 
+    
     return () => (<>
       <MainLayout>{
         {
@@ -32,48 +33,48 @@ export const StatisticsPage = defineComponent({
           icon: () => <Icon name='menu' onClick={onClickMenu} />,
           default: () => (
             <>
-              <Tabs v-model:selected={refSelected.value} class={s.tabs} rerenderOnSelected = {true}>
+              <Tabs resetSelectInput={true} v-model:selected={refSelected.value} class={s.tabs} rerenderOnSelected = {true}>
                 <Tab name='本月'>
-                  <Form v-model={refSelect.value} label='类型' type="select" options={[
-                    { value: '1', text: '支出' },
-                    { value: '2', text: '收入' },
+                  <Form  label='类型' type="select" options={[
+                    { value: 'expenses', text: '支出' },
+                    { value: 'income', text: '收入' },
                   ]}>
                   </Form>
-                  <LineChart />
+                  <LineChart startDate={time[0].startDay} endDate={time[0].endDay} />
                   <PieChart />
                   <Bars/>
                 </Tab>
 
                 <Tab name='上月'>
-                  <Form v-model={refSelect.value} label='类型' type="select" options={[
-                    { value: '1', text: '支出' },
-                    { value: '2', text: '收入' },
+                  <Form  label='类型' type="select" options={[
+                    { value: 'expenses', text: '支出' },
+                    { value: 'income', text: '收入' },
                   ]}>
                   </Form>
-                  <LineChart />
+                  <LineChart startDate={time[1].startDay} endDate={time[1].endDay}/>
                   <PieChart />
                   <Bars/>
                 </Tab>
 
                 <Tab name='今年'>
-                  <Form v-model={refSelect.value} label='类型' type="select" options={[
-                    { value: '1', text: '支出' },
-                    { value: '2', text: '收入' },
+                  <Form  label='类型' type="select" options={[
+                    { value: 'expenses', text: '支出' },
+                    { value: 'income', text: '收入' },
                   ]}>
                   </Form>
-                  <LineChart />
+                  <LineChart startDate={time[2].startDay} endDate={time[2].endDay}/>
                   <PieChart />
                   <Bars/>
                 </Tab>
 
                 <Tab name='自定义时间'>
 
-                  <Form v-model={refSelect.value} label='类型' type="select" options={[
-                    { value: '1', text: '支出' },
-                    { value: '2', text: '收入' },
+                  <Form  label='类型' type="select" options={[
+                    { value: 'expenses', text: '支出' },
+                    { value: 'income', text: '收入' },
                   ]}>
                   </Form>
-                  <LineChart />
+                  <LineChart startDate={diyStartDate.value} endDate={diyEndDate.value}/>
                   <PieChart />
                   <Bars/>
                   <TimeSelected refSelected={refSelected.value} />

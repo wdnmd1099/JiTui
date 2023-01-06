@@ -1,5 +1,6 @@
-import { computed, defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, ref, watch } from "vue";
 import s from './Form.module.scss';
+export let refChartChangeType =ref('expenses')
 export const Form = defineComponent({
   props: {
     type: {
@@ -17,7 +18,7 @@ export const Form = defineComponent({
           // console.log('cao')
           return <div class={s.selectWrapper}>
             <div class={s.label}>{props.label}</div>
-          <select class={[s.select]} onChange={(e: any) => { console.log(e.target.value) }} >
+          <select class={[s.select]} onChange={(e: any) => { refChartChangeType.value = e.target.value }} >
             {props.options?.map(item =>
               <option value={item.value}>{item.text}</option>
             )}
