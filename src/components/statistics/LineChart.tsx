@@ -81,7 +81,7 @@ export const LineChart = defineComponent({
       } else { // 小于31天全展示
         for (let i = 0; i < diff; i++) {
           if(!watchData[0]){  // 解决第一天数据获取错误或不展示的bug
-            watchData.push([`${props.startDate}`, 0])
+            watchData.push([`${new Time(new Date(props.startDate)).format()}`, 0])
           }
           watchData.push([nextDay(), 0])
           startDay = nextDay()
@@ -115,6 +115,7 @@ export const LineChart = defineComponent({
 
     watch(() => data.value, () => { // 第一次渲染是获取不到数据的，因为数据是渲染后才获得的数据，所以当获取到数据时，data.value改变，触发watch，重新渲染页面，这个是让页面能拿到数据热更新的重点
       // console.log('变了')
+      // console.log(data.value)
       chart!.setOption({  // 重新渲染页面
         ...echartsOption, //这个拷贝配置很重要，不这样做重新渲染的图是有bug的，主要是因为x轴的 type: 'category' 会改变掉
         series: [{
