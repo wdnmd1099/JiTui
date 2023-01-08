@@ -1,4 +1,4 @@
-import { Popup, DatetimePicker, Toast } from "vant";
+import { Popup, DatetimePicker, Toast, Overlay } from "vant";
 import { defineComponent, PropType, reactive, ref, watch } from "vue";
 import s from './TimeSelected.module.scss';
 import { Time } from "./time";
@@ -29,15 +29,17 @@ export const TimeSelected = defineComponent({
             props.refSelected === '自定义时间' ? '' : refCancel.value = false
         })
 
-        return () => (<>
+        return () => (
+            <>
             <div class={[s.clickShow]} onClick={() => {
                 refCancel.value = false
             }}>
             </div>
+            <Overlay show={!refCancel.value}>
             <div class={[s.timeSelected, [refCancel.value === true ? s.displayNone : '']]}>
-                <div class={[s.hiddenShadow]}>
+                {/* <div class={[s.hiddenShadow]}>
                     <div class={[s.shadow, , [refCancel.value === true ? s.displayNone : '']]}></div>
-                </div>
+                </div> */}
                 <div class={[s.wrapper, [refCancel.value === true ? s.displayNone : '']]}>
                     <div class={s.insideWrapper}>
                         <div class={s.selectTime}>
@@ -103,7 +105,8 @@ export const TimeSelected = defineComponent({
                     </div>
                 </div>
             </div>
-        </>
+            </Overlay>
+            </>
         )
     }
 })
