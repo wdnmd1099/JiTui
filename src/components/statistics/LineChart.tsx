@@ -17,7 +17,7 @@ const echartsOption = {
   },
   grid: [{ left: 16, top: 20, right: 16, bottom: 20 }],  // 边距
   xAxis: { //x轴的参数
-    type: 'category', //类型时间
+    type: 'category', //类型
     boundaryGap: ['3%', '0%'], //左右多显示多少时间
     axisLabel: {
       formatter: (value: string, amount: number) => new Time(new Date(value)).format('MM-DD'),
@@ -62,17 +62,6 @@ export const LineChart = defineComponent({
     const data = ref<any>([])
     const DAY = 24 * 3600 * 1000 // 一天的毫秒数
     let watchData: any = []
-
-
-
-    watch(() => [props.startDate, props.endDate], () => {
-      console.log(props.startDate, props.endDate)
-    })
-
-
-
-
-
 
     const fetchItemsSummary = async () => {
       if (!props.startDate || !props.endDate) { return }
@@ -126,9 +115,10 @@ export const LineChart = defineComponent({
       });
     })
 
-    watch(() => data.value, () => {
+    watch(() => data.value, () => { // 第一次渲染是获取不到数据的，因为数据是渲染后才获得的数据，所以当获取到数据时，data.value改变，触发watch，重新渲染页面，这个是让页面能拿到数据热更新的重点
       // console.log('变了')
       chart!.setOption({  // 重新渲染页面
+        ...echartsOption, //这个拷贝配置很重要，不这样做重新渲染的图是有bug的，主要是因为x轴的 type: 'category' 会改变掉
         series: [{
           data: data.value,
           type: 'line',
@@ -136,7 +126,7 @@ export const LineChart = defineComponent({
       })
     })
 
-    watch(() => [refChartChangeType.value, props.startDate, props.endDate], () => { // 改变类型时，重新发请求
+    watch(() => [refChartChangeType.value, props.startDate, props.endDate], () => { // 改变类型或时间时，重新发请求，触发数据变化重新渲染页面
       fetchItemsSummary()
     })
 
