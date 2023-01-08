@@ -40,7 +40,7 @@ export const StatisticsPage = defineComponent({
                   ]}>
                   </Form>
                   <LineChart startDate={time[0].startDay} endDate={time[0].endDay} />
-                  <PieChart />
+                  <PieChart startDate={time[0].startDay} endDate={time[0].endDay}/>
                   <Bars />
                 </Tab>
 
@@ -51,7 +51,7 @@ export const StatisticsPage = defineComponent({
                   ]}>
                   </Form>
                   <LineChart startDate={time[1].startDay} endDate={time[1].endDay} />
-                  <PieChart />
+                  <PieChart startDate={time[1].startDay} endDate={time[1].endDay}/>
                   <Bars />
                 </Tab>
 
@@ -62,7 +62,7 @@ export const StatisticsPage = defineComponent({
                   ]}>
                   </Form>
                   <LineChart startDate={time[3].startDay} endDate={time[3].endDay} />
-                  <PieChart />
+                  <PieChart startDate={time[3].startDay} endDate={time[3].endDay}/>
                   <Bars />
                 </Tab>
 
@@ -75,7 +75,7 @@ export const StatisticsPage = defineComponent({
                     ]}>
                     </Form>
                     <LineChart startDate={diyStartDate.value} endDate={diyEndDate.value} />
-                    <PieChart />
+                    <PieChart startDate={diyStartDate.value} endDate={diyEndDate.value}/>
                     <Bars />
                     </div> : ''
                     }

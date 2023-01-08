@@ -1,6 +1,6 @@
 import { computed, defineComponent, PropType, ref, watch } from "vue";
 import s from './Form.module.scss';
-export let refChartChangeType =ref('income')
+export let refChartChangeType =ref('expenses')
 export const Form = defineComponent({
   props: {
     type: {

@@ -1,14 +1,32 @@
 import { defineComponent, onMounted, PropType, ref } from 'vue';
 import s from './PieChart.module.scss';
 import * as echarts from 'echarts';
+import { http } from '../../shared/Http';
+import { Time } from '../../shared/time';
+import { refChartChangeType } from '../../shared/Form';
 export const PieChart = defineComponent({
   props: {
-    name: {
+    startDate: { //开始日期
       type: String as PropType<string>
-    }
+    },
+    endDate: { // 结束日期
+      type: String as PropType<string>
+    },
   },
   setup: (props, context) => {
     const refDiv2 = ref<HTMLDivElement>()
+    const DAY = 24 * 3600 * 1000 // 一天的毫秒数
+    console.log( props.startDate,new Date(`${props.startDate}`))
+    new Date('2022-1-1')
+    const fetchItemsSummaryTagId = async ()=>{
+      const response: any = await http.get('/items/summary', {
+        happen_after: new Time(new Date(new Date(`${props.startDate}`).getTime() - (DAY))).format(), //后端返回的数据是不包含当天的，所以开始的要前一天，结束的要后一天，才能获取到预期中的值
+        happen_before: new Time(new Date(new Date(`${props.endDate}`).getTime() + (DAY))).format(),
+        kind: refChartChangeType.value,
+        group_by: 'Tag_id',
+      })
+    }
+
     onMounted(() => {
       if (refDiv2.value === undefined) { return }
       // 基于准备好的dom，初始化echarts实例

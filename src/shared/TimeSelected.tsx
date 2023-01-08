@@ -92,7 +92,6 @@ export const TimeSelected = defineComponent({
                                     const EndMonth = Number(new Date(refDate.end).getMonth() + 1)
                                     const EndDay = Number(new Date(refDate.end).getDate())
                                     const diff = (new Date(`${EndYear}-${EndMonth}-${EndDay}`).getTime() - new Date(`${StartYear}-${StartMonth}-${StartDay}`).getTime()) / (24 * 3600 * 1000)
-                                    console.log(StartYear,StartMonth,StartDay,EndYear,EndMonth,EndDay)
                                     if(props.twoMonth === true){
                                         if(diff>93){
                                             Toast('只支持三个月内的数据查询')
@@ -116,7 +115,7 @@ export const TimeSelected = defineComponent({
                                     }
                                     diyStartDate.value = `${StartYear}-${StartMonth}-${StartDay}`
                                     diyEndDate.value = `${EndYear}-${EndMonth}-${EndDay}`
-                                    console.log(diyStartDate.value,diyEndDate.value)
+                                    // console.log(diyStartDate.value,diyEndDate.value)
                                 }}>确定</button>
                         </div>
                     </div>
