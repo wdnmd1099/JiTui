@@ -15,7 +15,7 @@ export const EmailInput = defineComponent({
     setup(props, context) {
         const formData = reactive({
             email: '879611700@qq.com',
-            code: '228964'
+            code: '522380'
         })
         const errors = reactive({
             email: [],

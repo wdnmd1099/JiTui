@@ -1,6 +1,7 @@
 import { defineComponent, PropType, ref, watch } from "vue";
 import { refChartChangeType } from "./Form";
 import s from './Tabs.module.scss';
+import { diyStartDate, diyEndDate } from "./TimeSelected";
 export const Tabs = defineComponent({
     props: {
         selected: {
@@ -20,7 +21,12 @@ export const Tabs = defineComponent({
     setup(props, context) {
         props.resetSelectInput === true ?   // 重置类型选择框为'expenses'
             watch(() => props.selected, () => {
-                refChartChangeType.value ='expenses'
+                refChartChangeType.value = 'expenses'
+            }) : ''
+        props.selected != '自定义时间' ? // 离开自定义时间时，重置已选择的时间，可以解决可视化图表的显示bug
+            watch(() => props.selected, () => {
+                diyStartDate.value = ''
+                diyEndDate.value = ''
             }) : ''
         return () => {
             const tabsArray = context.slots?.default?.()

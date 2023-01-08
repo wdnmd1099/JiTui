@@ -5,6 +5,7 @@
     height: 45px;
     width: 33vw;
     z-index: 2;
+    // border: 1px solid red;
 }
 .timeSelected{
     position: fixed;
@@ -97,4 +98,9 @@
         }
         
     }
+}
+
+
+.overlay{
+    background: var(--overlay-mask-bg);
 }

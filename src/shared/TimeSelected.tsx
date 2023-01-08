@@ -35,7 +35,7 @@ export const TimeSelected = defineComponent({
                 refCancel.value = false
             }}>
             </div>
-            <Overlay show={!refCancel.value}>
+            <Overlay show={!refCancel.value} class={s.overlay}>
             <div class={[s.timeSelected, [refCancel.value === true ? s.displayNone : '']]}>
                 {/* <div class={[s.hiddenShadow]}>
                     <div class={[s.shadow, , [refCancel.value === true ? s.displayNone : '']]}></div>
@@ -90,11 +90,14 @@ export const TimeSelected = defineComponent({
                                     const EndDay = Number(new Date(refDate.end).getDate())
                                     if (StartYear > EndYear) {
                                         Toast('时间选择错误')
+                                        return
                                     } else if (StartYear === EndYear && StartMonth > EndMonth) {
                                         Toast('时间选择错误')
+                                        return
                                     } else if (StartYear === EndYear && StartMonth === EndMonth) {
                                         if (StartDay > EndDay) {
                                             Toast('时间选择错误')
+                                            return
                                         }
                                     }
                                     diyStartDate.value = `${StartYear}-${StartMonth}-${StartDay}`

@@ -40,7 +40,7 @@ export const Overlay = defineComponent({
       <div class={s.mask} onClick={close}></div>
       <div class={s.overlay}>
         <section class={s.currentUser}>
-        <h2>{ refUserEmail.value ? refUserEmail.value : '未登录用户' }</h2>
+        <h2 class={s.h2}>{ refUserEmail.value ? refUserEmail.value : '未登录用户' }</h2>
         <p  onClick={onClickSignIn}> { refUserEmail.value ? '点击退出登录' : '点击登录' }</p>
         </section>
         <nav>

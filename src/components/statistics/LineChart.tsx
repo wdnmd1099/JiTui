@@ -1,4 +1,3 @@
-
 import { defineComponent, onMounted, PropType, ref, watch } from 'vue';
 import s from './LineChart.module.scss';
 import * as echarts from 'echarts';
@@ -18,15 +17,21 @@ const echartsOption = {
   },
   grid: [{ left: 16, top: 20, right: 16, bottom: 20 }],  // 边距
   xAxis: { //x轴的参数
-    type: 'time', //类型时间
+    type: 'category', //类型时间
     boundaryGap: ['3%', '0%'], //左右多显示多少时间
     axisLabel: {
-      formatter: (value: string) => new Time(new Date(value)).format('MM-DD'),
+      formatter: (value: string, amount: number) => new Time(new Date(value)).format('MM-DD'),
     },
     axisTick: {
       alignWithLabel: true,
     },
+    splitArea: {
+      show: false
+    }
   },
+
+
+
   yAxis: {
     show: true,
     type: 'value',
@@ -55,7 +60,20 @@ export const LineChart = defineComponent({
     const refDiv = ref<HTMLDivElement>()
     let chart: echarts.ECharts | undefined = undefined
     const data = ref<any>([])
+    const DAY = 24 * 3600 * 1000 // 一天的毫秒数
     let watchData: any = []
+
+
+
+    watch(() => [props.startDate, props.endDate], () => {
+      console.log(props.startDate, props.endDate)
+    })
+
+
+
+
+
+
     const fetchItemsSummary = async () => {
       if (!props.startDate || !props.endDate) { return }
       const response: any = await http.get('/items/summary', {
@@ -66,10 +84,31 @@ export const LineChart = defineComponent({
       })
       const groups = response.data.groups
       watchData = []
-      groups.map((item: any) => {
-        watchData.push([item.happen_at, item.amount]) // 因为push 不改变地址，不能使watch生效，用个中间变量赋值触发watch的重新渲染页面
-      })
-      data.value = watchData
+      let startDay = props.startDate
+      const nextDay = () => new Time(new Date(new Date(startDay).getTime() + (DAY))).format() // +1天日期
+      if (!props.startDate || !props.endDate) { return }
+      const diff = (new Date(props.endDate).getTime() - new Date(props.startDate).getTime()) / DAY // 开始时间和结束时间相差几天
+      watchData.push([startDay, 0])
+      if (diff > 31) {
+        groups.map((item: any) => {
+          watchData.push([item.happen_at, item.amount]) // 因为push 不改变地址，不能使watch生效，用个中间变量赋值触发watch的重新渲染页面
+        })
+      } else {
+        for (let i = 0; i < diff; i++) {
+          watchData.push([nextDay(), 0])
+          startDay = nextDay()
+        }
+        groups.map((item: any) => {
+          watchData.map((watchDataItem: any) => {
+            if (item.happen_at === watchDataItem[0]) {
+              watchDataItem[0] = item.happen_at
+              watchDataItem[1] = item.amount
+            }
+          })
+        })
+      }
+      data.value = watchData   // 因为push 不改变地址，不能使watch生效，用个中间变量赋值触发watch的重新渲染页面
+      console.log(data.value)
     }
 
     onMounted(() => {
@@ -92,13 +131,16 @@ export const LineChart = defineComponent({
       chart!.setOption({  // 重新渲染页面
         series: [{
           data: data.value,
+          type: 'line',
         }]
       })
     })
 
-    watch(() => refChartChangeType.value, () => {
+    watch(() => [refChartChangeType.value, props.startDate, props.endDate], () => { // 改变类型时，重新发请求
       fetchItemsSummary()
     })
+
+
 
     return () => (
       <div ref={refDiv} class={s.wrapper}></div>
