@@ -55,21 +55,20 @@ export const StatisticsPage = defineComponent({
                   <Bars />
                 </Tab>
 
-                <Tab name='今年'>
+                <Tab name='三个月'>
                   <Form label='类型' type="select" options={[
                     { value: 'expenses', text: '支出' },
                     { value: 'income', text: '收入' },
                   ]}>
                   </Form>
-                  <LineChart startDate={time[2].startDay} endDate={time[2].endDay} />
+                  <LineChart startDate={time[3].startDay} endDate={time[3].endDay} />
                   <PieChart />
                   <Bars />
                 </Tab>
 
                 <Tab name='自定义时间'>
-                  <TimeSelected refSelected={refSelected.value} />
+                  <TimeSelected twoMonth={true} refSelected={refSelected.value} />
                   {diyStartDate.value && diyEndDate.value ? <div class={s.rerender}>
-                  {console.log('渲染',diyStartDate.value,diyEndDate.value)}
                     <Form label='类型' type="select" options={[
                       { value: 'expenses', text: '支出' },
                       { value: 'income', text: '收入' },

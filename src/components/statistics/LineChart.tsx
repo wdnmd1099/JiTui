@@ -29,9 +29,6 @@ const echartsOption = {
       show: false
     }
   },
-
-
-
   yAxis: {
     show: true,
     type: 'value',
@@ -64,7 +61,6 @@ export const LineChart = defineComponent({
     let watchData: any = []
 
     const fetchItemsSummary = async () => {
-      console.log('发请求')
       if (!props.startDate || !props.endDate) { return }
       const response: any = await http.get('/items/summary', {
         happen_after: new Time(new Date(new Date(props.startDate).getTime() - (DAY))).format(), //后端返回的数据是不包含当天的，所以开始的要前一天，结束的要后一天，才能获取到预期中的值
@@ -72,8 +68,8 @@ export const LineChart = defineComponent({
         kind: refChartChangeType.value,
         group_by: 'happen_at',
       })
-      const groups = response.data.groups
-      watchData = []
+      const groups = response.data.groups // 获取的记账数据
+      watchData = [] // 重置数组，避免数据重叠
       let startDay = props.startDate
       const nextDay = () => new Time(new Date(new Date(startDay).getTime() + (DAY))).format() // +1天日期
       if (!props.startDate || !props.endDate) { return }
@@ -99,7 +95,7 @@ export const LineChart = defineComponent({
         })
       }
       data.value = watchData   // 因为push 不改变地址，不能使watch生效，用个中间变量赋值触发watch的重新渲染页面
-      console.log(data.value)
+      // console.log(data.value)
     }
 
     onMounted(() => {
@@ -131,8 +127,6 @@ export const LineChart = defineComponent({
     watch(() => [refChartChangeType.value, props.startDate, props.endDate], () => { // 改变类型或时间时，重新发请求，触发数据变化重新渲染页面
       fetchItemsSummary()
     })
-
-
 
     return () => (
       <div ref={refDiv} class={s.wrapper}></div>

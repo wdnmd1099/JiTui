@@ -13,7 +13,10 @@ export const TimeSelected = defineComponent({
         refSelected: {  // 必传一个当前选中的导航栏的name，如果是"自定义时间"，就触发watch
             type: String as PropType<string>,
             required: true,
-        }
+        },
+        twoMonth:{
+            type: Boolean as PropType<boolean>
+        },
     },
     emits: ['update:refOn'],
     setup(props, context) {
@@ -51,7 +54,7 @@ export const TimeSelected = defineComponent({
                                 value={new Time(refDate.start).format()}
                                 onClick={showStartDatePicker} />
                             <Popup position='bottom' v-model:show={refDate.startBoolean} >
-                                <DatetimePicker value={refDate.start} type="date" title="选择年月日"
+                                <DatetimePicker modelValue={refDate.start} type="date" title="选择年月日"
                                     onConfirm={setStart} onCancel={hideStartDatePicker}
                                     minDate={new Date(2022, 10, 1)}
                                     maxDate={new Date(2025, 0, 1)}
@@ -64,7 +67,7 @@ export const TimeSelected = defineComponent({
                                 value={new Time(refDate.end).format()}
                                 onClick={showEndDatePicker} />
                             <Popup position='bottom' v-model:show={refDate.endBoolean} >
-                                <DatetimePicker value={refDate.end} type="date" title="选择年月日"
+                                <DatetimePicker modelValue={refDate.end} type="date" title="选择年月日"
                                     onConfirm={setEnd} onCancel={hideEndDatePicker}
                                     minDate={new Date(2022, 10, 11)}
                                     maxDate={new Date(2025, 0, 1)}
@@ -88,6 +91,14 @@ export const TimeSelected = defineComponent({
                                     const EndYear = Number(new Date(refDate.end).getFullYear())
                                     const EndMonth = Number(new Date(refDate.end).getMonth() + 1)
                                     const EndDay = Number(new Date(refDate.end).getDate())
+                                    const diff = (new Date(`${EndYear}-${EndMonth}-${EndDay}`).getTime() - new Date(`${StartYear}-${StartMonth}-${StartDay}`).getTime()) / (24 * 3600 * 1000)
+                                    console.log(StartYear,StartMonth,StartDay,EndYear,EndMonth,EndDay)
+                                    if(props.twoMonth === true){
+                                        if(diff>93){
+                                            Toast('只支持三个月内的数据查询')
+                                            return
+                                        }
+                                    }
                                     if (StartYear > EndYear) {
                                         Toast('时间选择错误')
                                         return
@@ -97,6 +108,9 @@ export const TimeSelected = defineComponent({
                                     } else if (StartYear === EndYear && StartMonth === EndMonth) {
                                         if (StartDay > EndDay) {
                                             Toast('时间选择错误')
+                                            return
+                                        }else if(StartDay === EndDay){
+                                            Toast('开始与结束不能为同一天')
                                             return
                                         }
                                     }
