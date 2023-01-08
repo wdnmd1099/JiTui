@@ -41,7 +41,7 @@ export const StatisticsPage = defineComponent({
                   </Form>
                   <LineChart startDate={time[0].startDay} endDate={time[0].endDay} />
                   <PieChart startDate={time[0].startDay} endDate={time[0].endDay}/>
-                  <Bars />
+                  <Bars startDate={time[0].startDay} endDate={time[0].endDay}/>
                 </Tab>
 
                 <Tab name='上月'>
@@ -52,7 +52,7 @@ export const StatisticsPage = defineComponent({
                   </Form>
                   <LineChart startDate={time[1].startDay} endDate={time[1].endDay} />
                   <PieChart startDate={time[1].startDay} endDate={time[1].endDay}/>
-                  <Bars />
+                  <Bars startDate={time[1].startDay} endDate={time[1].endDay}/>
                 </Tab>
 
                 <Tab name='三个月'>
@@ -63,7 +63,7 @@ export const StatisticsPage = defineComponent({
                   </Form>
                   <LineChart startDate={time[3].startDay} endDate={time[3].endDay} />
                   <PieChart startDate={time[3].startDay} endDate={time[3].endDay}/>
-                  <Bars />
+                  <Bars startDate={time[3].startDay} endDate={time[3].endDay}/>
                 </Tab>
 
                 <Tab name='自定义时间'>
@@ -76,7 +76,7 @@ export const StatisticsPage = defineComponent({
                     </Form>
                     <LineChart startDate={diyStartDate.value} endDate={diyEndDate.value} />
                     <PieChart startDate={diyStartDate.value} endDate={diyEndDate.value}/>
-                    <Bars />
+                    <Bars startDate={diyStartDate.value} endDate={diyEndDate.value}/>
                     </div> : ''
                     }
                 </Tab>

@@ -1,9 +1,10 @@
-import { defineComponent, onMounted, PropType, ref } from 'vue';
+import { defineComponent, onMounted, PropType, ref, watch } from 'vue';
 import s from './PieChart.module.scss';
 import * as echarts from 'echarts';
 import { http } from '../../shared/Http';
 import { Time } from '../../shared/time';
 import { refChartChangeType } from '../../shared/Form';
+import { getMoney } from '../../shared/Money';
 export const PieChart = defineComponent({
   props: {
     startDate: { //开始日期
@@ -16,23 +17,38 @@ export const PieChart = defineComponent({
   setup: (props, context) => {
     const refDiv2 = ref<HTMLDivElement>()
     const DAY = 24 * 3600 * 1000 // 一天的毫秒数
-    console.log( props.startDate,new Date(`${props.startDate}`))
-    new Date('2022-1-1')
+    let watchData:any = []
+    let data  = ref<any>([{value:100,name:'shit'}])
     const fetchItemsSummaryTagId = async ()=>{
+      watchData = []
       const response: any = await http.get('/items/summary', {
         happen_after: new Time(new Date(new Date(`${props.startDate}`).getTime() - (DAY))).format(), //后端返回的数据是不包含当天的，所以开始的要前一天，结束的要后一天，才能获取到预期中的值
         happen_before: new Time(new Date(new Date(`${props.endDate}`).getTime() + (DAY))).format(),
         kind: refChartChangeType.value,
         group_by: 'Tag_id',
       })
+      const groups = response.data.groups
+      groups.map((item:any)=>{
+        watchData.push({ value:item.amount, name:item.tag.name })
+      })
+      data.value = watchData
     }
 
+    
     onMounted(() => {
+      fetchItemsSummaryTagId()
       if (refDiv2.value === undefined) { return }
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(refDiv2.value);
       // 绘制图表
       const option = {
+        tooltip:{
+          trigger: 'item',
+          formatter: (x: {name:string, value:number, percent: number})=>{
+            const {name,value,percent} = x
+            return `${name}: ￥${getMoney(value)} 占比 ${percent}%`
+          }
+        },
         grid: [
           { left: 0, top: 0, right: 0, bottom: 20 }
         ],
@@ -41,13 +57,7 @@ export const PieChart = defineComponent({
             name: 'Access From',
             type: 'pie',
             radius: '50%',
-            data: [
-              { value: 1048, name: 'Search Engine' },
-              { value: 735, name: 'Direct' },
-              { value: 580, name: 'Email' },
-              { value: 484, name: 'Union Ads' },
-              { value: 300, name: 'Video Ads' }
-            ],
+            data: data.value,
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
@@ -59,6 +69,17 @@ export const PieChart = defineComponent({
         ]
       };
       myChart.setOption(option);
+      watch(()=>data.value,()=>{
+        myChart.setOption({
+          ...option,
+          series: [
+            {
+              type: 'pie',
+              data: data.value
+            }
+          ]
+        })
+      })
     })
     return () => (
       <div ref={refDiv2} class={s.wrapper}></div>
