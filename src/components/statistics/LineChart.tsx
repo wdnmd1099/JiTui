@@ -64,10 +64,11 @@ export const LineChart = defineComponent({
     let watchData: any = []
 
     const fetchItemsSummary = async () => {
+      console.log('发请求')
       if (!props.startDate || !props.endDate) { return }
       const response: any = await http.get('/items/summary', {
-        happen_after: props.startDate,
-        happen_before: props.endDate,
+        happen_after: new Time(new Date(new Date(props.startDate).getTime() - (DAY))).format(), //后端返回的数据是不包含当天的，所以开始的要前一天，结束的要后一天，才能获取到预期中的值
+        happen_before: new Time(new Date(new Date(props.endDate).getTime() + (DAY))).format(),
         kind: refChartChangeType.value,
         group_by: 'happen_at',
       })
@@ -77,20 +78,21 @@ export const LineChart = defineComponent({
       const nextDay = () => new Time(new Date(new Date(startDay).getTime() + (DAY))).format() // +1天日期
       if (!props.startDate || !props.endDate) { return }
       const diff = (new Date(props.endDate).getTime() - new Date(props.startDate).getTime()) / DAY // 开始时间和结束时间相差几天
-      watchData.push([startDay, 0])
-      if (diff > 31) {
+      if (diff > 31) { // 大于31天的数据直接只显示有记账数据的，没有记账数据的日子不展示
         groups.map((item: any) => {
           watchData.push([item.happen_at, item.amount]) // 因为push 不改变地址，不能使watch生效，用个中间变量赋值触发watch的重新渲染页面
         })
-      } else {
+      } else { // 小于31天全展示
         for (let i = 0; i < diff; i++) {
+          if(!watchData[0]){  // 解决第一天数据获取错误或不展示的bug
+            watchData.push([`${props.startDate}`, 0])
+          }
           watchData.push([nextDay(), 0])
           startDay = nextDay()
         }
-        groups.map((item: any) => {
+        groups.map((item: any) => { // groups 是获取的数据
           watchData.map((watchDataItem: any) => {
-            if (item.happen_at === watchDataItem[0]) {
-              watchDataItem[0] = item.happen_at
+            if (item.happen_at === watchDataItem[0]) { // 遍历初始化好的工具数组，有和groups的日期相同的，修改它的钱
               watchDataItem[1] = item.amount
             }
           })
