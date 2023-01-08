@@ -68,7 +68,7 @@ export const StatisticsPage = defineComponent({
 
                 <Tab name='自定义时间'>
                   <TimeSelected twoMonth={true} refSelected={refSelected.value} />
-                  {diyStartDate.value && diyEndDate.value ? <div class={s.rerender}>
+                  {diyStartDate.value && diyEndDate.value? <div class={s.rerender}>
                     <Form label='类型' type="select" options={[
                       { value: 'expenses', text: '支出' },
                       { value: 'income', text: '收入' },

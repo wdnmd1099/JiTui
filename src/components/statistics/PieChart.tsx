@@ -22,10 +22,10 @@ export const PieChart = defineComponent({
     const fetchItemsSummaryTagId = async ()=>{
       watchData = []
       const response: any = await http.get('/items/summary', {
-        happen_after: new Time(new Date(new Date(`${props.startDate}`).getTime() - (DAY))).format(), //后端返回的数据是不包含当天的，所以开始的要前一天，结束的要后一天，才能获取到预期中的值
-        happen_before: new Time(new Date(new Date(`${props.endDate}`).getTime() + (DAY))).format(),
+        happen_after: props.startDate, 
+        happen_before:props.endDate,
         kind: refChartChangeType.value,
-        group_by: 'Tag_id',
+        group_by: 'tag_id',
       })
       const groups = response.data.groups
       groups.map((item:any)=>{
@@ -80,6 +80,9 @@ export const PieChart = defineComponent({
           ]
         })
       })
+    })
+    watch(() => [refChartChangeType.value, props.startDate, props.endDate], () => { // 改变类型或时间时，重新发请求，触发数据变化重新渲染页面
+      fetchItemsSummaryTagId()
     })
     return () => (
       <div ref={refDiv2} class={s.wrapper}></div>

@@ -20,13 +20,13 @@ export const Bars = defineComponent({
     const fetchItemsSummaryTagId = async ()=>{
       watchData = []
       const response: any = await http.get('/items/summary', {
-        happen_after: new Time(new Date(new Date(`${props.startDate}`).getTime() - (DAY))).format(), //后端返回的数据是不包含当天的，所以开始的要前一天，结束的要后一天，才能获取到预期中的值
-        happen_before: new Time(new Date(new Date(`${props.endDate}`).getTime() + (DAY))).format(),
+        happen_after: props.startDate, 
+        happen_before: props.endDate,
         kind: refChartChangeType.value,
-        group_by: 'Tag_id',
+        group_by: 'tag_id',
       })
       const groups = response.data.groups
-      console.log(groups)
+      // console.log(groups)
       groups.map((item:any)=>{
         watchData.push({tag:{ id:item.tag.id, name:item.tag.name, sign:item.tag.sign}, amount:item.amount})
       })
@@ -34,44 +34,24 @@ export const Bars = defineComponent({
       // console.log(data.value)
     }
 
-    let x = 0
     onMounted(()=>{
       fetchItemsSummaryTagId()
-
     })
-    // watch(()=>data.value,()=>{
-    //   console.log(123)
-    //   console.log(data.value)
-    //   const total = data.value.reduce((sum, item) => sum + item.amount, 0)
-    //   // console.log(total)
-    //   return data.value.map(item => ({
-    //     ...item,
-    //     percent: Math.round(item.amount / total * 100) + '%'
-    //   }))
-    // })
    
    
     
 
-
-    // const data3 = reactive([
-    //   { tag: { id: 1, name: '房租', sign: 'x' }, amount: 3000 },
-    //   { tag: { id: 2, name: '吃饭', sign: 'x' }, amount: 1000 },
-    //   { tag: { id: 3, name: '娱乐', sign: 'x' }, amount: 900 },
-    // ])
     const betterData3 = computed(() => {
       const total = data.value.reduce((sum, item) => sum + item.amount, 0)
       // console.log(total)
       return data.value.map(item => ({
         ...item,
-        percent: Math.round(item.amount / total * 100) + '%'
+        percent: Math.round(item.amount / total * 100)
       }))
     })
-
-
-
-
-
+    watch(() => [refChartChangeType.value, props.startDate, props.endDate], () => { // 改变类型或时间时，重新发请求，触发数据变化重新渲染页面
+      fetchItemsSummaryTagId()
+    })
 
 
     return () => (
@@ -83,18 +63,21 @@ export const Bars = defineComponent({
                 <div class={s.sign}>
                   {tag.sign}
                 </div>
+
                 <div class={s.bar_wrapper}>
                   <div class={s.bar_text}>
-                    <span> {tag.name} - {percent} </span>
+                    <span> {tag.name} - {percent}% </span>
                     <span> ￥<Money value={amount}/> </span>
                   </div>
                   <div class={s.bar}>
-                    <div class={s.bar_inner} style={{width: `${percent}%`}}></div>
+                    <div class={s.longBG}>
+                      <div class={s.bar_inner} style={{width: `${percent}%`}}></div>
+                    </div>
                   </div>
                 </div>
               </div>
             )
-          }): <div>没有数据</div>
+          }): <div class={s.noData}>没有数据</div>
         }
         </div>
     )
