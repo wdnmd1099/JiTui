@@ -112,8 +112,8 @@ export const time = reactive([
     endDay: new Time().lastDayOfYear().format()
   },
   {
-    startDay: new Time().firstDayOfMonth().format(),  //三个月
-    endDay: new Time().add(2, 'month').lastDayOfMonth().format()
+    startDay: new Time().add(-2, 'month').firstDayOfMonth().format(),  //三个月
+    endDay: new Time().format(),
   },
 ])
 
