@@ -88,9 +88,9 @@ export const ItemCreate = defineComponent({
                 <Tab name="支出" class={s.tags_wrapper}>
                   <div class={s.tag}>
                     <div class={s.sign}>
-                      <Icon name="add" class={s.createTag} />
+                      <Icon name="add" class={s.createTag} onClick={() => { router.push(createTag)}} />
                     </div>
-                    <div class={s.name} onClick={() => { router.push(createTag) }}>
+                    <div class={s.name}>
                       新增
                     </div>
                   </div>
@@ -132,9 +132,9 @@ export const ItemCreate = defineComponent({
                 <Tab name="收入" class={s.tags_wrapper}>
                   <div class={s.tag}>
                     <div class={s.sign}>
-                      <Icon name="add" class={s.createTag} />
+                      <Icon name="add" class={s.createTag} onClick={() => { router.push(createTag)}} />
                     </div>
-                    <div class={s.name} onClick={() => { router.push(createTag) }}>
+                    <div class={s.name} >
                       新增
                     </div>
                   </div>

@@ -49,17 +49,15 @@ export const TagForm = defineComponent({
             .catch(()=>{
               alert('传递参数错误')
             })
-            console.log('创建标签')
             router.push('/items/create')
         }
         
       }
 
 
-      const onClick = ()=>{  //修改标签
-        console.log('修改')
+      const onClick = async()=>{  //修改标签
         if(props.resetTag === true){
-          http.patch(`tags/${refTagData.tagId}`,formData)
+          await http.patch(`tags/${refTagData.tagId}`,formData)
           .catch((e)=>{Toast('请求服务器错误')})
           router.push('/items/create')
         }
@@ -72,7 +70,6 @@ export const TagForm = defineComponent({
         return 'submit'
        }
       }
-      console.log(xtype())
 
 
     return ()=>(

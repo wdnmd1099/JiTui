@@ -48,7 +48,7 @@ const mock = (response: AxiosResponse) => { //非本地地址不用mock，所以
   return false
 }
 
-export const http = new Http('/api/v1')
+export const http = new Http('http://121.196.236.94:8080/api/v1')
 
 http.instance.interceptors.request.use(config => { //请求前显示loader，无论请求成功或失败都关闭loader
   loaderSwitch.value = true

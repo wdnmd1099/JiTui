@@ -1,3 +1,4 @@
+import { number } from 'echarts';
 import { computed, defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue';
 import { refChartChangeType } from '../../shared/Form';
 import { http } from '../../shared/Http';
@@ -16,7 +17,7 @@ export const Bars = defineComponent({
   setup: (props, context) => {
     const DAY = 24 * 3600 * 1000 // 一天的毫秒数
     let watchData:any = []
-    let data  = ref([{ tag: { id: 1, name: '房租', sign: 'x' }, amount: 3000 }])
+    let data  = ref([{ tag: { id: 0, name: '', sign: '' }, amount: 0 }])
     const fetchItemsSummaryTagId = async ()=>{
       watchData = []
       const response: any = await http.get('/items/summary', {

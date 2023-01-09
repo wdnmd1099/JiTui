@@ -18,7 +18,7 @@ export const PieChart = defineComponent({
     const refDiv2 = ref<HTMLDivElement>()
     const DAY = 24 * 3600 * 1000 // 一天的毫秒数
     let watchData:any = []
-    let data  = ref<any>([{value:100,name:'shit'}])
+    let data  = ref<any>([{value:0,name:''}])
     const fetchItemsSummaryTagId = async ()=>{
       watchData = []
       const response: any = await http.get('/items/summary', {

@@ -35,3 +35,12 @@ yarn add @faker-js/faker@7.3.0
 ```
 
 ## 搭建完成运行 npx pnpm run dev 或 yarn run dev
+
+## 打包
+```
+npx vite build
+```
+## 部署 
+```  cmd 运行 前提是腾讯云的coscli要按规定下载，此处使用window系统
+coscli cp -r C:\Users\KasanPC\Desktop\Ji-Tui-Ji-Zhang\dist cos://ji-tui-1300042530
+```
