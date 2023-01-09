@@ -43,7 +43,8 @@ export const ItemCreate = defineComponent({
 
       if (response.data.pager.count < 25) { // 一进来请求就看标签是否满足25个，不满足25个直接显示没有更多
         refLoadMoreMessage.value[0].yesOrNo = false
-      } else if (response1.data.pager.count < 25) {
+      } 
+      if (response1.data.pager.count < 25) {
         refLoadMoreMessage.value[1].yesOrNo = false
       }
     })
@@ -99,7 +100,6 @@ export const ItemCreate = defineComponent({
                         itemSelected.value.name = tag.name;
                         itemSelected.value.sign = tag.sign;
                         itemSelected.value.id = tag.id;
-                        console.log(itemSelected.value)
                       }}>
                       <div class={s.sign}
                       onTouchstart = { (e:TouchEvent)=>{
@@ -144,7 +144,6 @@ export const ItemCreate = defineComponent({
                         itemSelected.value.name = tag.name;
                         itemSelected.value.sign = tag.sign;
                         itemSelected.value.id = tag.id;
-                        console.log(itemSelected.value)
                       }}>
                       <div class={s.sign}
                       onTouchstart = { (e:TouchEvent)=>{

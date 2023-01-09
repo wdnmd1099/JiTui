@@ -14,8 +14,10 @@ export const EmailInput = defineComponent({
     },
     setup(props, context) {
         const formData = reactive({
-            email: '879611700@qq.com',
-            code: '522380'
+            // email: '879611700@qq.com',
+            // code: '522380'
+            email: '591293631@qq.com',
+            code: '821113'
         })
         const errors = reactive({
             email: [],

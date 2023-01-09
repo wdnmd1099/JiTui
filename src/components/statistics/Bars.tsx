@@ -20,8 +20,8 @@ export const Bars = defineComponent({
     const fetchItemsSummaryTagId = async ()=>{
       watchData = []
       const response: any = await http.get('/items/summary', {
-        happen_after: props.startDate, 
-        happen_before: props.endDate,
+        happen_after: new Time(new Date(new Date(`${props.startDate}`).getTime() - (DAY))).format(), //后端返回的数据是不包含当天的，所以开始的要前一天，结束的要后一天，才能获取到预期中的值
+        happen_before: new Time(new Date(new Date(`${props.endDate}`).getTime() + (DAY))).format(),
         kind: refChartChangeType.value,
         group_by: 'tag_id',
       })

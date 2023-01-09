@@ -15,7 +15,14 @@ export const refChangeEnglishName = ()=>{
   }
 }
 export const TagForm = defineComponent({
+  props:{
+    resetTag:{
+      type:Boolean as PropType<boolean>,
+      default:false,
+    },
+  },
   setup(props,context){
+    console.log(props.resetTag)
     const router = useRouter()
     
     const formData = reactive({
@@ -38,22 +45,34 @@ export const TagForm = defineComponent({
         })
         Object.assign(errors, validate(formData, rules))
         if(errors.name === undefined && errors.sign === undefined){
-          const response = await http.post(`/tags`,formData,)
+          const response = await http.post(`/tags`,formData,) // 创建标签
             .catch(()=>{
               alert('传递参数错误')
             })
+            console.log('创建标签')
             router.push('/items/create')
         }
         
       }
 
-      const onClick = ()=>{
-        console.log(1)
-        http.patch(`tags/${refTagData.tagId}`,formData)
+
+      const onClick = ()=>{  //修改标签
+        console.log('修改')
+        if(props.resetTag === true){
+          http.patch(`tags/${refTagData.tagId}`,formData)
           .catch((e)=>{Toast('请求服务器错误')})
-        router.push('/items/create')
+          router.push('/items/create')
+        }
       }
 
+      const xtype = ()=>{
+       if( props.resetTag === true){
+        return 'button'
+       }else{
+        return 'submit'
+       }
+      }
+      console.log(xtype())
 
 
     return ()=>(
@@ -92,7 +111,8 @@ export const TagForm = defineComponent({
             <p class={s.tips}>记账时长按标签即可进行编辑</p>
             <div class={s.formRow}>
               <div class={s.formItem_value}>
-                <Button class={[s.formItem, s.button]} onClick={onClick}>确定</Button>
+                <Button class={[s.formItem, s.button]} type={xtype()} onClick={onClick}
+                >确定</Button>
               </div>
             </div>
           </form>

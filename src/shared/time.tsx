@@ -105,7 +105,7 @@ export const time = reactive([
   },
   {
     startDay: new Time().add(-1, 'month').firstDayOfMonth().format(), // 上月
-    endDay: new Time().add(-1, 'month').lastDayOfMonth().format()
+    endDay: new Time().add(-1, 'month').lastDayOfMonth().format() 
   },
   {
     startDay: new Time().firstDayOfYear().format(),  //今年

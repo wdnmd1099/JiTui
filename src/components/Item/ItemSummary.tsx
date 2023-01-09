@@ -1,5 +1,6 @@
 import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import { http } from "../../shared/Http";
+import { Time } from "../../shared/time";
 import s from './ItemSummary.module.scss';
 export const ItemSummary = defineComponent({
   props: {
@@ -16,13 +17,13 @@ export const ItemSummary = defineComponent({
   setup(props, context) {
     const items = ref<any>([])
     const page = ref(0)
-
+    const DAY = 24 * 3600 * 1000 // 一天的毫秒数
     const fetchItems: any = async () => {
       if (!props.startDate || !props.endDate) { return }
       for (let i = 1; i < 999; i++) {
         const response: any = await http.get('/items', {
-          happen_after: props.startDate,
-          happen_before: props.endDate,
+          happen_after: new Time(new Date(new Date(`${props.startDate}`).getTime() - (DAY))).format(), //后端返回的数据是不包含当天的，所以开始的要前一天，结束的要后一天，才能获取到预期中的值
+        happen_before: new Time(new Date(new Date(`${props.endDate}`).getTime() + (DAY))).format(),
           page: page.value + 1,
         })
         const { resources, pager } = response.data
@@ -44,15 +45,15 @@ export const ItemSummary = defineComponent({
 
 
 
-
+    
     const itemsBalance = reactive({
       expenses: 0, income: 0, balance: 0
     })
     const fetchItemsBalance =async ()=>{
       if(!props.startDate || !props.endDate){ return }
       const response = await http.get('/items/balance', {
-        happen_after: props.startDate,
-        happen_before: props.endDate,
+        happen_after: new Time(new Date(new Date(`${props.startDate}`).getTime() - (DAY))).format(), //后端返回的数据是不包含当天的，所以开始的要前一天，结束的要后一天，才能获取到预期中的值
+        happen_before: new Time(new Date(new Date(`${props.endDate}`).getTime() + (DAY))).format(),
         page: page.value + 1,
       })
       Object.assign(itemsBalance, response.data)

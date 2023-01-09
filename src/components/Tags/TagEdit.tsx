@@ -31,7 +31,7 @@ export const TagEdit = defineComponent({
             title: () => '标签详情',
             icon: () => <Icon name="left" onClick={() => { router.push('/items/create') }} />,
             default:()=> (<>
-             <TagForm />
+             <TagForm  resetTag={true}/>
              <div class={s.actions}>
               <Button level='danger' class={[s.removeTags]} onClick={onClick}>删除标签</Button>
              </div>
