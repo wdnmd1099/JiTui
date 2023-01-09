@@ -3,7 +3,7 @@ import s from './Icon.module.scss';
 
 //用法：把svg放到src/assets/icons 把svg名字写到下面，重启服务器就可以了
 export type IconName = 'add' | 'chart' | 'clock' | 'cloud' | 'jitui' | 'pig' | 'menu'
-| 'charts' | 'notify' | 'export' | 'left' | 'date' | 'books'
+| 'charts' | 'notify' | 'export' | 'left' | 'date' | 'books' | 'commingSoon' | 'backHome'
 export const Icon = defineComponent({
   props: {
     name: {

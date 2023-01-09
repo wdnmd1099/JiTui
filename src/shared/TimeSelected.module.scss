@@ -35,18 +35,18 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    font-size: 1.2em;
+    font-size: 1em;
     &.displayNone{
         display: none;
     }
     
     .insideWrapper {
         padding-bottom: 30px;
-        width: 70vw;
+        width: 85vw;
         z-index: 2;
         background: white;
         .selectTime {
-            padding: 24px 0 24px 0;
+            padding: 12px 0 12px 0;
             background: rgba(248,197,119,0.7);
             .time{
                 padding-left: 10px;
@@ -55,12 +55,21 @@
 
         .start {
             margin: 20px 0px 30px 10px;
-            width: 70vw;
+            width: 85vw;
             height: 63px;
-
+            .starttime{
+                // border: 1px solid red;
+                padding-left: 15px;
+                padding-bottom: 8px;
+            }
             >.startInput {
-                padding: 0 10px 0 10px;
-                width: calc(70vw - 20px);
+                padding: 0 20px 0 20px;
+                width: calc(85vw - 20px);
+                border: 1px solid black;
+                box-shadow:0px -0.4px 0px 0px gray,   /*上边阴影*/
+                -0.4px 0px 0px 0px gray,   /*左边阴影*/
+                0.4px 0px 0px 0px gray,    /*右边阴影*/
+                0px 0.4px 0px 0px gray;    /*下边阴影*/
                 border-radius: 8px;
                 height: 46px;
             }
@@ -69,18 +78,26 @@
         .end {
             margin-bottom: 20px;
             margin: 0px 10px 30px 10px;
-            
-            width: 70vw;
+            width: 85vw;
+            .endtime{
+                padding-left: 15px;
+                padding-bottom: 8px;
+            }
             >.endInput {
-                padding: 0 10px 0 10px;
-                width: calc(70vw - 20px);
+                border: 1px solid black;
+                box-shadow:0px -0.4px 0px 0px gray,   /*上边阴影*/
+                -0.4px 0px 0px 0px gray,   /*左边阴影*/
+                0.4px 0px 0px 0px gray,    /*右边阴影*/
+                0px 0.4px 0px 0px gray;    /*下边阴影*/
+                padding: 0 20px 0 20px;
+                width: calc(85vw - 20px);
                 border-radius: 8px;
                 height: 46px;
             }
         }
 
         .yesOrNo {
-            width: 70vw;
+            width: 85vw;
             text-align: right;
             >.cancel {
                 background: rgba(0,0,0,0);

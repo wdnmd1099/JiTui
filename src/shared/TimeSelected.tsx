@@ -49,7 +49,7 @@ export const TimeSelected = defineComponent({
                             <header class={s.time}>请选择时间</header>
                         </div>
                         <div class={s.start}>
-                            <div>开始时间</div>
+                            <div class={s.starttime}>开始时间</div>
                             <input readonly={true} class={s.startInput}
                                 value={new Time(refDate.start).format()}
                                 onClick={showStartDatePicker} />
@@ -62,7 +62,7 @@ export const TimeSelected = defineComponent({
                             </Popup>
                         </div>
                         <div class={s.end}>
-                            <div>结束时间</div>
+                            <div class={s.endtime}>结束时间</div>
                             <input readonly={true} class={s.endInput}
                                 value={new Time(refDate.end).format()}
                                 onClick={showEndDatePicker} />

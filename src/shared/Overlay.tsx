@@ -46,6 +46,12 @@ export const Overlay = defineComponent({
         <nav>
             <ul class={s.action_list}>
                 <li>
+                    <RouterLink to="/start" class={s.action}>
+                    <Icon name="backHome" class={s.iconSize}></Icon>
+                    <span>返回首页</span>
+                    </RouterLink>
+                </li>
+                <li>
                     <RouterLink to="/items" class={s.action}>
                     <Icon name="books" class={s.iconSize}></Icon>
                     <span>记账列表</span>
