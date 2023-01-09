@@ -34,31 +34,4 @@ yarn add @faker-js/faker@7.3.0
 
 ```
 
-## 搭建完成运行 npx pnpm run dev
-
-
-
-
-
-
-## 编码规范
-
-### 推荐使用
-```
-const main = ref<HTMLElement>()   //默认为undefined
-```
-### 不推荐
-```
-const main = ref<HTMLElement | null>(null) 
-```
-### 一些问题
-//调用组件时，标签和 {} 之间不能有空格，否则会当成数组解析而不是对象
-
-
-
-### 组件
-TagCreate 输入表情和标题的组件
-
-Tabs 和 Tab  导航栏，比如支出和收入的导航栏切换，
-它接受一个name当导航栏的文字，通过ref传不同的name来切换导航，v-model ref双向绑定，ItemCreate有使用示例
-
+## 搭建完成运行 npx pnpm run dev 或 yarn run dev
