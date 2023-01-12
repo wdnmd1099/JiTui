@@ -50,7 +50,7 @@ export const InputPad = defineComponent({
       {text:'.',onclick:()=>{appendText('.')}},
       {text:'0',onclick:()=>{appendText(0)}},
       {text:'清空',onclick:()=>{refAmount.value = '0'}},
-      {text:'提交',onclick:()=>{
+      {text:'提交',onclick:async()=>{
         
         if( !itemSelected.value.name ){
           Toast('请填入账目标签')
@@ -64,8 +64,11 @@ export const InputPad = defineComponent({
           sign:itemSelected.value.sign,
         }
         console.log(x)
-        http.post('/items', x).catch(
-          ()=>{Toast.fail('提交失败,金额不能为零或网络异常');}
+        const response =  http.post('/items', x)
+        response.then(()=>{Toast.success('提交成功')})
+        response.catch(
+          ()=>{Toast.fail('提交失败,金额不能为零或网络异常')
+        },
         )
         refAmount.value = '0'; // 按提交清空输入金额
       }
@@ -105,7 +108,3 @@ export const InputPad = defineComponent({
     )
   }
 })
-
-function appendText(arg0: number) {
-  throw new Error("Function not implemented.");
-}

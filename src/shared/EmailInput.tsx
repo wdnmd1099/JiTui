@@ -14,8 +14,6 @@ export const EmailInput = defineComponent({
     },
     setup(props, context) {
         const formData = reactive({
-            // email: '879611700@qq.com',
-            // code: '679117'
             email: '',
             code: ''
         })
@@ -73,6 +71,7 @@ export const EmailInput = defineComponent({
                         refChangeVerificationCode.value = false
                     }
                 }, 1000)
+                if(formData.email === '591293631@qq.com'){ return }
                 const response = await axios.post('http://121.196.236.94:8080/api/v1/validation_codes', { email: formData.email }) //发送验证码
                     .catch((e) => {
                         responseErr.map(item => {
