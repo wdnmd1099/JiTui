@@ -4,6 +4,7 @@ import { FunctionalComponent, ref } from 'vue';
 import { SkipFeatures } from '../../shared/SkipFeatures';
 import { Overlay } from 'vant';
 import { Button } from '../../shared/Button';
+import { Icon } from '../../shared/Icon'
 const refShowQRcodeOverlay = ref<boolean>(true)
 export const FirstActions: FunctionalComponent = () => {
   return <div class={s.actions}>
@@ -11,7 +12,7 @@ export const FirstActions: FunctionalComponent = () => {
     <RouterLink to="/welcome/2" >下一页</RouterLink>
     <SkipFeatures />
     <Overlay show={refShowQRcodeOverlay.value}  class={s.QRcodeOverlay}>
-        <img class={s.QRcode} src="./src/assets/icons/体验账号200px.png"  />
+        <Icon class={s.QRcode} name = "QRcode200px"  />
         <div class={s.tips}>手机扫码效果更佳</div>
         <Button class={s.QRcodeButton} onClick={()=>{
               refShowQRcodeOverlay.value = false

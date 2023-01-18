@@ -1,10 +1,8 @@
 import { defineComponent, PropType, ref } from "vue";
 import { useRouter } from "vue-router";
-import { MainLayout } from "../layouts/MainLayout";
 import { Button } from "./Button";
 import { Icon } from "./Icon";
-import s from './Notify.module.scss';
-import { Overlay } from "./Overlay";
+import s from './QRcodeLoad.module.scss';
 export const QRcodeLoad = defineComponent({
   props:{
     name:{
@@ -18,8 +16,8 @@ export const QRcodeLoad = defineComponent({
     }
     return ()=>(<>
       <div class={s.wrapper}>
-      <img class={s.QRcode} src="./src/assets/icons/体验账号200px.png"  />
-          <div class={s.nodata}>手机扫码效果更佳</div>
+          <Icon name='QRcode200px' class={s.QRcode}></Icon>
+          <div class={s.tips}>手机扫码效果更佳</div>
           <Button class={s.back} onClick={()=>{onClickMenu()}}>返回</Button>
       </div>
     </>
