@@ -10,8 +10,7 @@ export const FirstActions: FunctionalComponent = () => {
     <SkipFeatures class={s.fake} to="/start" />
     <RouterLink to="/welcome/2" >下一页</RouterLink>
     <SkipFeatures />
-    <Overlay show={refShowQRcodeOverlay.value}  class={s.QRcodeOverlay} 
-         onclick={()=>{refShowQRcodeOverlay.value=false}}>
+    <Overlay show={refShowQRcodeOverlay.value}  class={s.QRcodeOverlay}>
         <img class={s.QRcode} src="./src/assets/icons/体验账号200px.png"  />
         <div class={s.tips}>手机扫码效果更佳</div>
         <Button class={s.QRcodeButton} onClick={()=>{

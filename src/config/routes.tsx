@@ -18,6 +18,7 @@ import { TagEdit } from "../components/Tags/TagEdit";
 import { SignIn } from "../views/SignIn";
 import { StatisticsPage } from "../components/statistics/Charts";
 import { Notify } from "../shared/Notify";
+import { QRcodeLoad } from "../shared/QRcodeLoad";
 //如果没反应的话先看看父路由有没有写<RouterView/>
 
 export const routes: RouteRecordRaw[] = [
@@ -68,6 +69,7 @@ export const routes: RouteRecordRaw[] = [
     ]
   },
   { path:'/notify', component:Notify},
-  { path:'/export', component:Notify}
+  { path:'/export', component:Notify},
+  { path:'/QRcodeLoad',component:QRcodeLoad}
 
 ]

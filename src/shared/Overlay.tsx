@@ -64,6 +64,12 @@ export const Overlay = defineComponent({
                     </RouterLink>
                 </li>
                 <li>
+                    <RouterLink to="/QRcodeLoad" class={s.action}>
+                    <Icon name="QRcode" class={s.iconSize}></Icon>
+                    <span>扫二维码</span>
+                    </RouterLink>
+                </li>
+                <li>
                     <RouterLink to="/export" class={s.action}>
                     <Icon name="export" class={s.iconSize}></Icon>
                     <span>导出数据</span>
