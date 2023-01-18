@@ -15,6 +15,32 @@
   }
 }
 
+.QRcodeOverlay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    z-index:calc(var(--z-index-bottom-nav) + 1);
+    .tips{
+      font-size: 20px;
+      font-family: sans-serif;
+      padding-top: 4px;
+    }
+    .QRcode{
+      height: 200px;
+      width: 200px;
+      top: calc(50vh - 100px);
+    }
+    .QRcodeButton{
+      position: fixed;
+      top: calc(50vh + 120px);
+      width: 200px;
+    }
+}
+
+
+
 .actions {
   position: fixed;
   z-index: var(--z-index-bottom-nav);
