@@ -1,4 +1,5 @@
 import { defineComponent, PropType, ref, watch } from "vue";
+import { itemSelected, refTagData } from "../components/Item/ItemCreate";
 import { refChartChangeType } from "./Form";
 import s from './Tabs.module.scss';
 import { diyStartDate, diyEndDate } from "./TimeSelected";
@@ -25,6 +26,7 @@ export const Tabs = defineComponent({
             }) : ''
         props.selected != '自定义时间' ? // 离开自定义时间时，重置已选择的时间，可以解决可视化图表的显示bug
             watch(() => props.selected, () => {
+                itemSelected.value = { name: '', sign: '', id: 0, amount: 0 }
                 diyStartDate.value = ''
                 diyEndDate.value = ''
             }) : ''

@@ -67,7 +67,7 @@ export const InputPad = defineComponent({
         const response =  http.post('/items', x)
         response.then(()=>{Toast.success('提交成功')})
         response.catch(
-          ()=>{Toast.fail('提交失败,金额不能为零或网络异常')
+          ()=>{Toast.fail('提交失败,金额为零或未选择标签')
         },
         )
         refAmount.value = '0'; // 按提交清空输入金额
