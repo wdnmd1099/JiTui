@@ -7,86 +7,91 @@ import { itemSelected } from "./ItemCreate";
 import { refChangeEnglishName } from "../Tags/TagForm";
 import { http } from "../../shared/Http";
 export const InputPad = defineComponent({
-  props:{
-    name:{
-        type:String as PropType<string>
+  props: {
+    name: {
+      type: String as PropType<string>
     }
   },
-  setup(props,context){
+  setup(props, context) {
     const refAmount = ref('0')
-    const appendText = (_n:number|string)=>{
-        const n=_n.toString()
-        const dotIndex =refAmount.value.indexOf('.')
-        let add = ()=>{refAmount.value += n}
-        if(n ==='.' && dotIndex === -1){ //一开始打. 就是0.
-          add()
-          return
-        }else if(refAmount.value[0]==='0' && dotIndex === -1){ //一开始打数字，就是数字
-          refAmount.value = ''
-          add()
-          return
-        }else if(n ==='.' && dotIndex >= 0){ //打了点不能再打点
-          return
-        }
-        else if(refAmount.value.length > 11 ){
-          return
-        }
-        else if(refAmount.value.length - dotIndex > 2 && dotIndex !== -1){ //小数点后二位结束
-          return
-        }
-        
+    const appendText = (_n: number | string) => {
+      const n = _n.toString()
+      const dotIndex = refAmount.value.indexOf('.')
+      let add = () => { refAmount.value += n }
+      if (n === '.' && dotIndex === -1) { //一开始打. 就是0.
         add()
+        return
+      } else if (refAmount.value[0] === '0' && dotIndex === -1) { //一开始打数字，就是数字
+        refAmount.value = ''
+        add()
+        return
+      } else if (n === '.' && dotIndex >= 0) { //打了点不能再打点
+        return
+      }
+      else if (refAmount.value.length > 11) {
+        return
+      }
+      else if (refAmount.value.length - dotIndex > 2 && dotIndex !== -1) { //小数点后二位结束
+        return
+      }
+
+      add()
     }
     const buttons = [
-      {text:'1',onclick:()=>{appendText(1)}},
-      {text:'2',onclick:()=>{appendText(2)}},
-      {text:'3',onclick:()=>{appendText(3)}},
-      {text:'4',onclick:()=>{appendText(4)}},
-      {text:'5',onclick:()=>{appendText(5)}},
-      {text:'6',onclick:()=>{appendText(6)}},
-      {text:'7',onclick:()=>{appendText(7)}},
-      {text:'8',onclick:()=>{appendText(8)}},
-      {text:'9',onclick:()=>{appendText(9)}},
-      {text:'.',onclick:()=>{appendText('.')}},
-      {text:'0',onclick:()=>{appendText(0)}},
-      {text:'清空',onclick:()=>{refAmount.value = '0'}},
-      {text:'提交',onclick:async()=>{
-        
-        if( !itemSelected.value.name ){
-          Toast('请填入账目标签')
+      { text: '1', onclick: () => { appendText(1) } },
+      { text: '2', onclick: () => { appendText(2) } },
+      { text: '3', onclick: () => { appendText(3) } },
+      { text: '4', onclick: () => { appendText(4) } },
+      { text: '5', onclick: () => { appendText(5) } },
+      { text: '6', onclick: () => { appendText(6) } },
+      { text: '7', onclick: () => { appendText(7) } },
+      { text: '8', onclick: () => { appendText(8) } },
+      { text: '9', onclick: () => { appendText(9) } },
+      { text: '.', onclick: () => { appendText('.') } },
+      { text: '0', onclick: () => { appendText(0) } },
+      { text: '清空', onclick: () => { refAmount.value = '0' } },
+      {
+        text: '提交', onclick: async () => {
+
+          if (!itemSelected.value.name) {
+            Toast('请填入账目标签')
+          }
+          const x = {
+            amount: parseFloat(refAmount.value) * 100,
+            kind: refChangeEnglishName(),
+            happen_at: new Date(),
+            tag_ids: [itemSelected.value.id],
+            name: itemSelected.value.name,
+            sign: itemSelected.value.sign,
+          }
+          // console.log(x)
+          const response = http.post('/items', x)
+          response
+            .then(() => {
+              Toast.success('提交成功')
+              refAmount.value = '0'; // 按提交清空输入金额
+            })
+            .catch(
+              () => {
+                Toast.fail('提交失败,金额为零或未选择标签')
+              },
+            )
         }
-        const x = {
-          amount:parseFloat(refAmount.value)*100,
-          kind:refChangeEnglishName(),
-          happen_at:new Date(),
-          tag_ids:[itemSelected.value.id],
-          name:itemSelected.value.name,
-          sign:itemSelected.value.sign,
-        }
-        console.log(x)
-        const response =  http.post('/items', x)
-        response.then(()=>{Toast.success('提交成功')})
-        response.catch(
-          ()=>{Toast.fail('提交失败,金额为零或未选择标签')
-        },
-        )
-        refAmount.value = '0'; // 按提交清空输入金额
-      }
-    },
+      },
     ]
     const refDate = ref<Date>()
     const refDatePickerVisible = ref(false)
     const showDatePicker = () => refDatePickerVisible.value = true
     const hideDatePicker = () => refDatePickerVisible.value = false
-    const setDate = (date: Date) => {refDate.value = date; hideDatePicker() }
-    return ()=>(
+    const setDate = (date: Date) => { refDate.value = date; hideDatePicker() }
+    return () => (
       <>
         <div class={s.dateAndAmount}>
           <span class={s.date}>
-             <Icon name='date' class={s.icon}/>
-             
-             <span  class='xxxx' onClick={showDatePicker}>{new Time(refDate.value).format()}</span>
-             {/* <Popup position='bottom' v-model:show={refDatePickerVisible.value} >
+            <Icon name='date' class={s.icon} />
+
+            <span class='xxxx' onClick={showDatePicker}>{new Time(refDate.value).format()}</span>
+            {/* <Popup position='bottom' v-model:show={refDatePickerVisible.value} >
               <DatetimePicker value={refDate.value} type="date" title="选择年月日"
                 onConfirm={setDate} onCancel={hideDatePicker} 
                 minDate={new Date(2022, 10, 11)}
@@ -100,8 +105,8 @@ export const InputPad = defineComponent({
         </div>
 
         <div class={s.buttons}>
-          {buttons.map(button => 
-          <button onClick={button.onclick}>{button.text}</button>)}
+          {buttons.map(button =>
+            <button onClick={button.onclick}>{button.text}</button>)}
         </div>
 
       </>
