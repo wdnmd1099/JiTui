@@ -19,8 +19,8 @@ export const TagEdit = defineComponent({
       })
         .then(() => {
           http.delete(`tags/${refTagData.tagId}`)
+          .then(()=>{router.push('/items/create')})
           .catch(()=>{Toast('网络请求失败')})
-          router.push('/items/create')
         })
         .catch(() => {});
     }
