@@ -24,6 +24,7 @@ export const Welcome = defineComponent({
       } else if (route.name === 'welcome3') {
         router.push('/welcome/4')
       } else if (route.name === 'welcome4') {
+        localStorage.setItem('skipFeatures','yes')
         router.push('/start')
       }
     }, 1000)
