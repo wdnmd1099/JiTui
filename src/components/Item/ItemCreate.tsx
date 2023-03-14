@@ -1,8 +1,6 @@
-import { number } from "echarts";
 import { defineComponent, onBeforeMount, PropType, reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { MainLayout } from "../../layouts/MainLayout";
-import { Button } from "../../shared/Button";
 import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
 import { LoadMoreButton } from "../../shared/LoadMoreButton";

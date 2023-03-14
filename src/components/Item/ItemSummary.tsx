@@ -20,16 +20,16 @@ export const ItemSummary = defineComponent({
     const DAY = 24 * 3600 * 1000 // 一天的毫秒数
     const fetchItems: any = async () => {
       if (!props.startDate || !props.endDate) { return }
-      for (let i = 1; i < 999; i++) {
-        const response: any = await http.get('/items', {
+      for (let i = 1; i < 30; i++) {
+        const response: any = await http.get('/items', { // 获取账目
           happen_after: new Time(new Date(new Date(`${props.startDate}`).getTime() - (DAY))).format(), //后端返回的数据是不包含当天的，所以开始的要前一天，结束的要后一天，才能获取到预期中的值
-        happen_before: new Time(new Date(new Date(`${props.endDate}`).getTime() + (DAY))).format(),
+          happen_before: new Time(new Date(new Date(`${props.endDate}`).getTime() + (DAY))).format(),
           page: page.value + 1,
         })
-        const { resources, pager } = response.data
+        const { resources } = response.data
         items.value?.push(...resources)
         page.value += 1
-        if (pager.count < 25) {
+        if (resources.length < 25) {  // resources 是具体的账目，如果resources的账目少于25，说明没有下一页数据了，就可以退出循环了
           return
         }
       }
