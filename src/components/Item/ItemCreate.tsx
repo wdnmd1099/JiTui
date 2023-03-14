@@ -4,6 +4,7 @@ import { MainLayout } from "../../layouts/MainLayout";
 import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
 import { LoadMoreButton } from "../../shared/LoadMoreButton";
+import { Overlay } from "../../shared/Overlay";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { refLoadMoreMessage, onLoadMore } from "../../shared/TagsLoadMore";
 import { InputPad } from "./InputPad";
@@ -25,6 +26,11 @@ export const ItemCreate = defineComponent({
   setup(props, context) {
     const router = useRouter()
     const createTag = '/tags/create'
+    const overlayVisible = ref(false)
+    const onClickMenu = ()=>{
+      overlayVisible.value = !overlayVisible.value;
+  }
+
 
     onBeforeMount(async () => {
       const response: any = await http.get('/tags', {
@@ -57,15 +63,13 @@ export const ItemCreate = defineComponent({
         || e.touches[0].screenY - screenY > 20 || e.touches[0].screenY - screenY < 20){
         clearTimeout(timer)
       }
-    }
+    } 
 
     return () => (
       <MainLayout>{
         {
           title: () => '记一笔',
-          icon: () => <Icon name='left' class={s.navIcon} onClick={() => {
-            router.push('/start')
-          }}></Icon>,
+          icon: () => <Icon name='menu' class={s.navIcon} onClick={onClickMenu} />,
           default: () => <>
             {/*下面是loading界面*/}
             <div class={refIncomeTags.value ? s.loadingCompleted : s.loading}>
@@ -171,6 +175,7 @@ export const ItemCreate = defineComponent({
                 <InputPad />
               </div>
             </div>
+            {overlayVisible.value && <Overlay onClose={() => overlayVisible.value = false} />}
           </>
         }}</MainLayout>
     )
